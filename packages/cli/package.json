@@ -36,7 +36,7 @@
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "eslint-config": "workspace:*",
+    "typescript-config": "workspace:*"
   }
 }

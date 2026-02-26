@@ -13,12 +13,13 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "xyzdocs-core": "workspace:*",
+    "eslint-config": "workspace:*",
     "xyzdocs-mdx": "workspace:*",
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "eslint-config": "workspace:*",
+    "typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

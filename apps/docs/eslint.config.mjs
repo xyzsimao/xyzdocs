@@ -1,18 +1,23 @@
-import { defineConfig, globalIgnores } from 'eslint/config';
-import nextVitals from 'eslint-config-next/core-web-vitals';
-import nextTs from 'eslint-config-next/typescript';
+import { nextJsConfig } from 'eslint-config/next-js';
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    '.next/**',
-    'out/**',
-    'build/**',
-    'next-env.d.ts',
-  ]),
-]);
-
-export default eslintConfig;
+export default [
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      '.next/',
+      '.source/',
+      'out/',
+      'next.config.mjs',
+      'postcss.config.js',
+    ],
+  },
+  ...nextJsConfig,
+  {
+    rules: {
+      'no-console': 'off',
+      // for Fumadocs CLI
+      'import/no-relative-packages': 'off',
+    },
+  },
+];
