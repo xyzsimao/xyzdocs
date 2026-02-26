@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod 4 schema
@@ -11,7 +11,7 @@ export const metaSchema = z.object({
   defaultOpen: z.boolean().optional(),
   collapsible: z.boolean().optional(),
   icon: z.string().optional(),
-});
+})
 
 /**
  * Zod 4 schema
@@ -24,4 +24,4 @@ export const pageSchema = z.object({
 
   // Fumadocs OpenAPI generated
   _openapi: z.looseObject({}).optional(),
-});
+})

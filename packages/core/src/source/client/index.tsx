@@ -1,15 +1,17 @@
-import type * as PageTree from '@/page-tree';
-import { visit } from '@/page-tree/utils';
-import { useMemo } from 'react';
+import type * as PageTree from '@/page-tree'
+import { visit } from '@/page-tree/utils'
+import { useMemo } from 'react'
 
 export interface SerializedPageTree {
-  $fumadocs_loader: 'page-tree';
-  data: object;
+  $fumadocs_loader: 'page-tree'
+  data: object
 }
 
 export type Serialized<Data> = {
-  [K in keyof Data]: Data[K] extends SerializedPageTree ? PageTree.Root : Data[K];
-};
+  [K in keyof Data]: Data[K] extends SerializedPageTree
+    ? PageTree.Root
+    : Data[K]
+}
 
 function deserializeHTML(html: string) {
   return (
@@ -18,21 +20,23 @@ function deserializeHTML(html: string) {
         __html: html,
       }}
     />
-  );
+  )
 }
 
-export function deserializePageTree(serialized: SerializedPageTree): PageTree.Root {
-  const root = serialized.data as PageTree.Root;
+export function deserializePageTree(
+  serialized: SerializedPageTree
+): PageTree.Root {
+  const root = serialized.data as PageTree.Root
   visit(root, (item) => {
     if ('icon' in item && typeof item.icon === 'string') {
-      item.icon = deserializeHTML(item.icon);
+      item.icon = deserializeHTML(item.icon)
     }
     if (typeof item.name === 'string') {
-      item.name = deserializeHTML(item.name);
+      item.name = deserializeHTML(item.name)
     }
-  });
+  })
 
-  return root;
+  return root
 }
 
 /**
@@ -43,17 +47,17 @@ export function deserializePageTree(serialized: SerializedPageTree): PageTree.Ro
  */
 export function useFumadocsLoader<V>(serialized: V): Serialized<V> {
   return useMemo(() => {
-    const out: Record<string, unknown> = {};
+    const out: Record<string, unknown> = {}
     for (const k in serialized) {
-      const v = serialized[k];
+      const v = serialized[k]
       if (isSerializedPageTree(v)) {
-        out[k] = deserializePageTree(v);
+        out[k] = deserializePageTree(v)
       } else {
-        out[k] = v;
+        out[k] = v
       }
     }
-    return out as Serialized<V>;
-  }, [serialized]);
+    return out as Serialized<V>
+  }, [serialized])
 }
 
 function isSerializedPageTree(v: unknown): v is SerializedPageTree {
@@ -62,5 +66,5 @@ function isSerializedPageTree(v: unknown): v is SerializedPageTree {
     v !== null &&
     '$fumadocs_loader' in v &&
     v.$fumadocs_loader === 'page-tree'
-  );
+  )
 }

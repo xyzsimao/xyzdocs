@@ -1,13 +1,13 @@
-import Negotiator from 'negotiator';
-import { compile, match } from 'path-to-regexp';
+import Negotiator from 'negotiator'
+import { compile, match } from 'path-to-regexp'
 
 export function getNegotiator(request: Request) {
-  const headers: Record<string, string> = {};
+  const headers: Record<string, string> = {}
   request.headers.forEach((value, key) => {
-    headers[key] = value;
-  });
+    headers[key] = value
+  })
 
-  return new Negotiator({ headers });
+  return new Negotiator({ headers })
 }
 
 /**
@@ -19,27 +19,29 @@ export function getNegotiator(request: Request) {
  * @param destination - the target pattern to convert into
  */
 export function rewritePath(source: string, destination: string) {
-  const matcher = match(source, { decode: false });
-  const compiler = compile(destination, { encode: false });
+  const matcher = match(source, { decode: false })
+  const compiler = compile(destination, { encode: false })
 
   return {
     rewrite(pathname: string) {
-      const result = matcher(pathname);
-      if (!result) return false;
+      const result = matcher(pathname)
+      if (!result) return false
 
-      return compiler(result.params);
+      return compiler(result.params)
     },
-  };
+  }
 }
 
 export function isMarkdownPreferred(
   request: Request,
   options?: {
-    markdownMediaTypes?: string[];
-  },
+    markdownMediaTypes?: string[]
+  }
 ) {
-  const { markdownMediaTypes = ['text/plain', 'text/markdown', 'text/x-markdown'] } = options ?? {};
+  const {
+    markdownMediaTypes = ['text/plain', 'text/markdown', 'text/x-markdown'],
+  } = options ?? {}
 
-  const mediaTypes = getNegotiator(request).mediaTypes();
-  return markdownMediaTypes.some((type) => mediaTypes.includes(type));
+  const mediaTypes = getNegotiator(request).mediaTypes()
+  return markdownMediaTypes.some((type) => mediaTypes.includes(type))
 }

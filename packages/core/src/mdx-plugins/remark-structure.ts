@@ -1,32 +1,32 @@
-import Slugger from 'github-slugger';
-import type { Nodes, Root } from 'mdast';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import type { PluggableList, Transformer } from 'unified';
-import { visit } from 'unist-util-visit';
-import { flattenNode, toMdxExport } from './mdast-utils';
+import Slugger from 'github-slugger'
+import type { Nodes, Root } from 'mdast'
+import { remark } from 'remark'
+import remarkGfm from 'remark-gfm'
+import type { PluggableList, Transformer } from 'unified'
+import { visit } from 'unist-util-visit'
+import { flattenNode, toMdxExport } from './mdast-utils'
 import type {
   MdxJsxAttribute,
   MdxJsxExpressionAttribute,
   MdxJsxFlowElement,
-} from 'mdast-util-mdx-jsx';
+} from 'mdast-util-mdx-jsx'
 
 interface Heading {
-  id: string;
-  content: string;
+  id: string
+  content: string
 }
 
 interface Content {
-  heading: string | undefined;
-  content: string;
+  heading: string | undefined
+  content: string
 }
 
 export interface StructuredData {
-  headings: Heading[];
+  headings: Heading[]
   /**
    * Refer to paragraphs, a heading may contain multiple contents as well
    */
-  contents: Content[];
+  contents: Content[]
 }
 
 export interface StructureOptions {
@@ -35,7 +35,7 @@ export interface StructureOptions {
    *
    * @defaultValue ['heading', 'paragraph', 'blockquote', 'tableCell', 'mdxJsxFlowElement']
    */
-  types?: string[] | ((node: Nodes) => boolean);
+  types?: string[] | ((node: Nodes) => boolean)
 
   /**
    * A list of indexable MDX attributes, either:
@@ -47,13 +47,13 @@ export interface StructureOptions {
     | string[]
     | ((
         node: MdxJsxFlowElement,
-        attribute: MdxJsxAttribute | MdxJsxExpressionAttribute,
-      ) => boolean);
+        attribute: MdxJsxAttribute | MdxJsxExpressionAttribute
+      ) => boolean)
 
   /**
    * export as `structuredData` or specified variable name.
    */
-  exportAs?: string | boolean;
+  exportAs?: string | boolean
 }
 
 declare module 'mdast' {
@@ -61,7 +61,7 @@ declare module 'mdast' {
     /**
      * [Fumadocs] Get content of unserializable element, `remarkStructure` uses it to generate search index.
      */
-    _string?: string[];
+    _string?: string[]
   }
 }
 
@@ -70,19 +70,25 @@ declare module 'vfile' {
     /**
      * [Fumadocs] injected by `remarkStructure`
      */
-    structuredData: StructuredData;
+    structuredData: StructuredData
   }
 }
 
 export const remarkStructureDefaultOptions = {
-  types: ['heading', 'paragraph', 'blockquote', 'tableCell', 'mdxJsxFlowElement'],
+  types: [
+    'heading',
+    'paragraph',
+    'blockquote',
+    'tableCell',
+    'mdxJsxFlowElement',
+  ],
   allowedMdxAttributes: (node) => {
-    if (!node.name) return false;
+    if (!node.name) return false
 
-    return ['TypeTable', 'Callout'].includes(node.name);
+    return ['TypeTable', 'Callout'].includes(node.name)
   },
   exportAs: false,
-} satisfies Required<StructureOptions>;
+} satisfies Required<StructureOptions>
 
 /**
  * Extract content into structured data.
@@ -94,55 +100,55 @@ export function remarkStructure({
   allowedMdxAttributes = remarkStructureDefaultOptions.allowedMdxAttributes,
   exportAs = remarkStructureDefaultOptions.exportAs,
 }: StructureOptions = {}): Transformer<Root, Root> {
-  const slugger = new Slugger();
+  const slugger = new Slugger()
 
   if (Array.isArray(allowedMdxAttributes)) {
-    const arr = allowedMdxAttributes;
+    const arr = allowedMdxAttributes
     allowedMdxAttributes = (_node, attribute) =>
-      attribute.type === 'mdxJsxAttribute' && arr.includes(attribute.name);
+      attribute.type === 'mdxJsxAttribute' && arr.includes(attribute.name)
   }
 
   if (Array.isArray(types)) {
-    const arr = types;
-    types = (node) => arr.includes(node.type);
+    const arr = types
+    types = (node) => arr.includes(node.type)
   }
 
   return (tree, file) => {
-    slugger.reset();
-    const data: StructuredData = { contents: [], headings: [] };
-    let lastHeading: string | undefined;
+    slugger.reset()
+    const data: StructuredData = { contents: [], headings: [] }
+    let lastHeading: string | undefined
 
     // Fumadocs OpenAPI Generated Structured Data
     if (file.data.frontmatter) {
       const frontmatter = file.data.frontmatter as {
         _openapi?: {
-          structuredData?: StructuredData;
-        };
-      };
+          structuredData?: StructuredData
+        }
+      }
 
       if (frontmatter._openapi?.structuredData) {
-        data.headings.push(...frontmatter._openapi.structuredData.headings);
-        data.contents.push(...frontmatter._openapi.structuredData.contents);
+        data.headings.push(...frontmatter._openapi.structuredData.headings)
+        data.contents.push(...frontmatter._openapi.structuredData.contents)
       }
     }
 
     visit(tree, (element) => {
-      if (element.type === 'root' || !types(element)) return;
+      if (element.type === 'root' || !types(element)) return
 
       if (element.type === 'heading') {
-        element.data ||= {};
-        element.data.hProperties ||= {};
-        const properties = element.data.hProperties;
-        const content = flattenNode(element).trim();
-        const id = properties.id ?? slugger.slug(content);
+        element.data ||= {}
+        element.data.hProperties ||= {}
+        const properties = element.data.hProperties
+        const content = flattenNode(element).trim()
+        const id = properties.id ?? slugger.slug(content)
 
         data.headings.push({
           id,
           content,
-        });
+        })
 
-        lastHeading = id;
-        return 'skip';
+        lastHeading = id
+        return 'skip'
       }
 
       if (element.data?._string) {
@@ -150,48 +156,60 @@ export function remarkStructure({
           data.contents.push({
             heading: lastHeading,
             content,
-          });
+          })
         }
 
-        return 'skip';
+        return 'skip'
       }
 
       if (element.type === 'mdxJsxFlowElement' && element.name) {
         data.contents.push(
           ...element.attributes.flatMap((attribute) => {
             const value =
-              typeof attribute.value === 'string' ? attribute.value : attribute.value?.value;
-            if (!value || value.length === 0) return [];
-            if (allowedMdxAttributes && !allowedMdxAttributes(element, attribute)) return [];
+              typeof attribute.value === 'string'
+                ? attribute.value
+                : attribute.value?.value
+            if (!value || value.length === 0) return []
+            if (
+              allowedMdxAttributes &&
+              !allowedMdxAttributes(element, attribute)
+            )
+              return []
 
             return {
               heading: lastHeading,
-              content: attribute.type === 'mdxJsxAttribute' ? `${attribute.name}: ${value}` : value,
-            };
-          }),
-        );
+              content:
+                attribute.type === 'mdxJsxAttribute'
+                  ? `${attribute.name}: ${value}`
+                  : value,
+            }
+          })
+        )
 
-        return;
+        return
       }
 
-      const content = flattenNode(element).trim();
-      if (content.length === 0) return;
+      const content = flattenNode(element).trim()
+      if (content.length === 0) return
 
       data.contents.push({
         heading: lastHeading,
         content,
-      });
+      })
 
-      return 'skip';
-    });
+      return 'skip'
+    })
 
-    file.data.structuredData = data;
+    file.data.structuredData = data
     if (exportAs) {
       tree.children.unshift(
-        toMdxExport(typeof exportAs === 'string' ? exportAs : 'structuredData', data),
-      );
+        toMdxExport(
+          typeof exportAs === 'string' ? exportAs : 'structuredData',
+          data
+        )
+      )
     }
-  };
+  }
 }
 
 /**
@@ -200,13 +218,13 @@ export function remarkStructure({
 export function structure(
   content: string,
   remarkPlugins: PluggableList = [],
-  options: StructureOptions = {},
+  options: StructureOptions = {}
 ): StructuredData {
   const result = remark()
     .use(remarkGfm)
     .use(remarkPlugins)
     .use(remarkStructure, options)
-    .processSync(content);
+    .processSync(content)
 
-  return result.data.structuredData!;
+  return result.data.structuredData!
 }

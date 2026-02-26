@@ -1,4 +1,4 @@
-import { defineProject } from 'vitest/config';
+import { defineProject } from 'vitest/config'
 
 export default defineProject({
   resolve: {
@@ -6,4 +6,4 @@ export default defineProject({
       '@/': new URL('./src/', import.meta.url).pathname,
     },
   },
-});
+})

@@ -1,11 +1,11 @@
-import { pathToFileURL } from 'node:url';
-import type { LoadedConfig } from '@/config/build';
-import { buildConfig } from '@/config/build';
-import type { Core } from '@/core';
+import { pathToFileURL } from 'node:url'
+import type { LoadedConfig } from '@/config/build'
+import { buildConfig } from '@/config/build'
+import type { Core } from '@/core'
 
 async function compileConfig(core: Core) {
-  const { build } = await import('esbuild');
-  const { configPath, outDir } = core.getOptions();
+  const { build } = await import('esbuild')
+  const { configPath, outDir } = core.getOptions()
 
   const transformed = await build({
     entryPoints: [{ in: configPath, out: 'source.config' }],
@@ -20,10 +20,10 @@ async function compileConfig(core: Core) {
       '.js': '.mjs',
     },
     allowOverwrite: true,
-  });
+  })
 
   if (transformed.errors.length > 0) {
-    throw new Error('failed to compile configuration file');
+    throw new Error('failed to compile configuration file')
   }
 }
 
@@ -32,14 +32,19 @@ async function compileConfig(core: Core) {
  *
  * @param build - By default, it assumes the config file has been compiled. Set this `true` to compile the config first.
  */
-export async function loadConfig(core: Core, build = false): Promise<LoadedConfig> {
-  if (build) await compileConfig(core);
+export async function loadConfig(
+  core: Core,
+  build = false
+): Promise<LoadedConfig> {
+  if (build) await compileConfig(core)
 
-  const url = pathToFileURL(core.getCompiledConfigPath());
+  const url = pathToFileURL(core.getCompiledConfigPath())
   // always return a new config
-  url.searchParams.set('hash', Date.now().toString());
+  url.searchParams.set('hash', Date.now().toString())
 
-  const config = import(url.href).then((loaded) => buildConfig(loaded as Record<string, unknown>));
+  const config = import(url.href).then((loaded) =>
+    buildConfig(loaded as Record<string, unknown>)
+  )
 
-  return await config;
+  return await config
 }

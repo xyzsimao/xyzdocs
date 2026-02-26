@@ -1,38 +1,55 @@
 ```ts title="server.ts"
 // @ts-nocheck
-import { default as __fd_glob_0 } from "./generate-index/meta.json?collection=docs"
-import { server } from 'xyzdocs-mdx/runtime/server';
-import type * as Config from './config';
+import { default as __fd_glob_0 } from './generate-index/meta.json?collection=docs'
+import { server } from 'xyzdocs-mdx/runtime/server'
+import type * as Config from './config'
 
-const create = server<typeof Config, import("xyzdocs-mdx/runtime/types").InternalTypeConfig & {
-  DocData: {
+const create = server<
+  typeof Config,
+  import('xyzdocs-mdx/runtime/types').InternalTypeConfig & {
+    DocData: {}
   }
-}>({"doc":{"passthroughs":["extractedReferences"]}});
+>({ doc: { passthroughs: ['extractedReferences'] } })
 
-export const docs = await create.meta("docs", "packages/mdx/test/fixtures/generate-index", {"meta.json": __fd_glob_0, });
+export const docs = await create.meta(
+  'docs',
+  'packages/mdx/test/fixtures/generate-index',
+  { 'meta.json': __fd_glob_0 }
+)
 ```
 
 ```ts title="dynamic.ts"
 // @ts-nocheck
-import { dynamic } from 'xyzdocs-mdx/runtime/dynamic';
-import * as Config from './config';
+import { dynamic } from 'xyzdocs-mdx/runtime/dynamic'
+import * as Config from './config'
 
-const create = await dynamic<typeof Config, import("xyzdocs-mdx/runtime/types").InternalTypeConfig & {
-  DocData: {
+const create = await dynamic<
+  typeof Config,
+  import('xyzdocs-mdx/runtime/types').InternalTypeConfig & {
+    DocData: {}
   }
-}>(Config, {"configPath":"packages/mdx/test/fixtures/config.ts","environment":"test","outDir":"packages/mdx/test/fixtures"}, {"doc":{"passthroughs":["extractedReferences"]}});
+>(
+  Config,
+  {
+    configPath: 'packages/mdx/test/fixtures/config.ts',
+    environment: 'test',
+    outDir: 'packages/mdx/test/fixtures',
+  },
+  { doc: { passthroughs: ['extractedReferences'] } }
+)
 ```
 
 ```ts title="browser.ts"
 // @ts-nocheck
-import { browser } from 'xyzdocs-mdx/runtime/browser';
-import type * as Config from './config';
+import { browser } from 'xyzdocs-mdx/runtime/browser'
+import type * as Config from './config'
 
-const create = browser<typeof Config, import("xyzdocs-mdx/runtime/types").InternalTypeConfig & {
-  DocData: {
+const create = browser<
+  typeof Config,
+  import('xyzdocs-mdx/runtime/types').InternalTypeConfig & {
+    DocData: {}
   }
-}>();
-const browserCollections = {
-};
-export default browserCollections;
+>()
+const browserCollections = {}
+export default browserCollections
 ```

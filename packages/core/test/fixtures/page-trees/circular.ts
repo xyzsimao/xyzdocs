@@ -1,4 +1,4 @@
-import { Source } from '@/source';
+import { Source } from '@/source'
 
 export const source: Source = {
   files: [
@@ -31,4 +31,4 @@ export const source: Source = {
       },
     },
   ],
-};
+}

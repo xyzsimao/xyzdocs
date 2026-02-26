@@ -1,24 +1,24 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import fs from 'node:fs/promises'
+import path from 'node:path'
 
-const map = new Map<string, Promise<string>>();
+const map = new Map<string, Promise<string>>()
 
 export function createFSCache() {
   return {
     read(file: string): Promise<string> {
-      const fullPath = toFullPath(file);
-      const cached = map.get(fullPath);
-      if (cached) return cached;
+      const fullPath = toFullPath(file)
+      const cached = map.get(fullPath)
+      if (cached) return cached
 
-      const read = fs.readFile(fullPath).then((s) => s.toString());
-      map.set(fullPath, read);
-      return read;
+      const read = fs.readFile(fullPath).then((s) => s.toString())
+      map.set(fullPath, read)
+      return read
     },
 
     delete(file: string) {
-      map.delete(toFullPath(file));
+      map.delete(toFullPath(file))
     },
-  };
+  }
 }
 
 /**
@@ -26,8 +26,8 @@ export function createFSCache() {
  */
 function toFullPath(file: string) {
   if (path.isAbsolute(file)) {
-    return path.relative(process.cwd(), file);
+    return path.relative(process.cwd(), file)
   }
 
-  return file;
+  return file
 }

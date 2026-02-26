@@ -1,59 +1,61 @@
-import type { ProcessorOptions } from '@mdx-js/mdx';
-import type { Pluggable } from 'unified';
-import type * as Plugins from 'xyzdocs-core/mdx-plugins';
-import type { BuildEnvironment } from './build';
+import type { ProcessorOptions } from '@mdx-js/mdx'
+import type { Pluggable } from 'unified'
+import type * as Plugins from 'xyzdocs-core/mdx-plugins'
+import type { BuildEnvironment } from './build'
 
-type ResolvePlugins = Pluggable[] | ((v: Pluggable[]) => Pluggable[]);
+type ResolvePlugins = Pluggable[] | ((v: Pluggable[]) => Pluggable[])
 
 export type DefaultMDXOptions = Omit<
   NonNullable<ProcessorOptions>,
   'rehypePlugins' | 'remarkPlugins' | '_ctx'
 > & {
-  rehypePlugins?: ResolvePlugins;
-  remarkPlugins?: ResolvePlugins;
+  rehypePlugins?: ResolvePlugins
+  remarkPlugins?: ResolvePlugins
 
   /**
    * Properties to export from `vfile.data`
    */
-  valueToExport?: string[];
+  valueToExport?: string[]
 
-  remarkStructureOptions?: Plugins.StructureOptions | false;
-  remarkHeadingOptions?: Plugins.RemarkHeadingOptions;
-  remarkImageOptions?: Plugins.RemarkImageOptions | false;
-  remarkCodeTabOptions?: Plugins.RemarkCodeTabOptions | false;
-  remarkNpmOptions?: Plugins.RemarkNpmOptions | false;
-  rehypeCodeOptions?: Plugins.RehypeCodeOptions | false;
-};
+  remarkStructureOptions?: Plugins.StructureOptions | false
+  remarkHeadingOptions?: Plugins.RemarkHeadingOptions
+  remarkImageOptions?: Plugins.RemarkImageOptions | false
+  remarkCodeTabOptions?: Plugins.RemarkCodeTabOptions | false
+  remarkNpmOptions?: Plugins.RemarkNpmOptions | false
+  rehypeCodeOptions?: Plugins.RehypeCodeOptions | false
+}
 
 function pluginOption(
   def: (v: Pluggable[]) => (Pluggable | false)[],
-  options: ResolvePlugins = [],
+  options: ResolvePlugins = []
 ): Pluggable[] {
-  const list = def(Array.isArray(options) ? options : []).filter(Boolean) as Pluggable[];
+  const list = def(Array.isArray(options) ? options : []).filter(
+    Boolean
+  ) as Pluggable[]
 
   if (typeof options === 'function') {
-    return options(list);
+    return options(list)
   }
 
-  return list;
+  return list
 }
 
 export type MDXPresetOptions =
   | ({ preset?: 'fumadocs' } & DefaultMDXOptions)
   | ({
-      preset: 'minimal';
-    } & ProcessorOptions);
+      preset: 'minimal'
+    } & ProcessorOptions)
 
 /**
  * apply MDX processor presets
  */
 export function applyMdxPreset(
-  options: MDXPresetOptions = {},
+  options: MDXPresetOptions = {}
 ): (environment: BuildEnvironment) => Promise<ProcessorOptions> {
   return async (environment = 'bundler') => {
-    if (options.preset === 'minimal') return options;
+    if (options.preset === 'minimal') return options
 
-    const plugins = await import('xyzdocs-core/mdx-plugins');
+    const plugins = await import('xyzdocs-core/mdx-plugins')
     const {
       valueToExport = [],
       rehypeCodeOptions,
@@ -63,7 +65,7 @@ export function applyMdxPreset(
       remarkCodeTabOptions,
       remarkNpmOptions,
       ...mdxOptions
-    } = options;
+    } = options
 
     const remarkPlugins = pluginOption(
       (v) => [
@@ -79,11 +81,15 @@ export function applyMdxPreset(
           plugins.remarkImage,
           {
             ...remarkImageOptions,
-            useImport: remarkImageOptions?.useImport ?? environment === 'bundler',
+            useImport:
+              remarkImageOptions?.useImport ?? environment === 'bundler',
           },
         ],
         'remarkCodeTab' in plugins &&
-          remarkCodeTabOptions !== false && [plugins.remarkCodeTab, remarkCodeTabOptions],
+          remarkCodeTabOptions !== false && [
+            plugins.remarkCodeTab,
+            remarkCodeTabOptions,
+          ],
         'remarkNpm' in plugins &&
           remarkNpmOptions !== false && [plugins.remarkNpm, remarkNpmOptions],
         ...v,
@@ -97,21 +103,21 @@ export function applyMdxPreset(
         valueToExport.length > 0 &&
           (() => {
             return (_, file) => {
-              file.data['mdx-export'] ??= [];
+              file.data['mdx-export'] ??= []
 
               for (const name of valueToExport) {
-                if (!(name in file.data)) continue;
+                if (!(name in file.data)) continue
 
                 file.data['mdx-export'].push({
                   name,
                   value: file.data[name],
-                });
+                })
               }
-            };
+            }
           }),
       ],
-      mdxOptions.remarkPlugins,
-    );
+      mdxOptions.remarkPlugins
+    )
 
     const rehypePlugins = pluginOption(
       (v) => [
@@ -119,14 +125,15 @@ export function applyMdxPreset(
         ...v,
         plugins.rehypeToc,
       ],
-      mdxOptions.rehypePlugins,
-    );
+      mdxOptions.rehypePlugins
+    )
 
     return {
       ...mdxOptions,
-      outputFormat: environment === 'runtime' ? 'function-body' : mdxOptions.outputFormat,
+      outputFormat:
+        environment === 'runtime' ? 'function-body' : mdxOptions.outputFormat,
       remarkPlugins,
       rehypePlugins,
-    };
-  };
+    }
+  }
 }

@@ -1,14 +1,14 @@
-import { fileURLToPath } from 'node:url';
-import * as path from 'node:path';
-import { expect, test } from 'vitest';
-import { z } from 'zod';
-import { ValidationError } from '@/utils/validation';
-import { defineCollections, defineConfig } from '@/config';
-import { xyzMatter } from '@/utils/xyz-matter';
-import { buildConfig } from '@/config/build';
-import { createCore } from '@/core';
-import indexFile from '@/plugins/index-file';
-import lastModified from '@/plugins/last-modified';
+import { fileURLToPath } from 'node:url'
+import * as path from 'node:path'
+import { expect, test } from 'vitest'
+import { z } from 'zod'
+import { ValidationError } from '@/utils/validation'
+import { defineCollections, defineConfig } from '@/config'
+import { xyzMatter } from '@/utils/xyz-matter'
+import { buildConfig } from '@/config/build'
+import { createCore } from '@/core'
+import indexFile from '@/plugins/index-file'
+import lastModified from '@/plugins/last-modified'
 
 test('format errors', async () => {
   const schema = z.object({
@@ -18,7 +18,7 @@ test('format errors', async () => {
       value: z.number(),
     }),
     value: z.string().max(4),
-  });
+  })
 
   const result = await schema['~standard'].validate({
     text: 4,
@@ -26,10 +26,10 @@ test('format errors', async () => {
       value: 'string',
     },
     value: 'asfdfsdfsdfsd',
-  });
+  })
 
   if (result.issues) {
-    const error = new ValidationError('in index.mdx:', result.issues);
+    const error = new ValidationError('in index.mdx:', result.issues)
 
     expect(error.toString()).toMatchInlineSnapshot(`
       "Error: in index.mdx::
@@ -37,14 +37,14 @@ test('format errors', async () => {
         obj,key: Invalid input: expected number, received undefined
         obj,value: Invalid input: expected number, received string
         value: Too big: expected string to have <=4 characters"
-    `);
+    `)
   }
-});
+})
 
-const baseDir = path.dirname(fileURLToPath(import.meta.url));
+const baseDir = path.dirname(fileURLToPath(import.meta.url))
 const cases: {
-  name: string;
-  config: Record<string, unknown>;
+  name: string
+  config: Record<string, unknown>
 }[] = [
   {
     name: 'sync',
@@ -137,57 +137,48 @@ const cases: {
       }),
     },
   },
-];
+]
 
 for (const { name, config } of cases) {
   test(`generate JS index file: ${name}`, async () => {
     const core = createCore({
-      configPath: path.relative(process.cwd(), path.join(baseDir, './fixtures/config.ts')),
+      configPath: path.relative(
+        process.cwd(),
+        path.join(baseDir, './fixtures/config.ts')
+      ),
       environment: 'test',
       outDir: path.relative(process.cwd(), path.join(baseDir, './fixtures')),
       plugins: [indexFile()],
-    });
+    })
 
     await core.init({
       config: buildConfig(config),
-    });
+    })
 
-    const { entries, workspaces } = await core.emit();
+    const { entries, workspaces } = await core.emit()
     for (const [name, workspace] of Object.entries(workspaces)) {
       for (const item of workspace) {
-        item.path = path.join(name, item.path);
-        entries.push(item);
+        item.path = path.join(name, item.path)
+        entries.push(item)
       }
     }
     const markdown = entries
-      .map((entry) => `\`\`\`ts title="${entry.path}"\n${entry.content}\n\`\`\``)
-      .join('\n\n');
+      .map(
+        (entry) => `\`\`\`ts title="${entry.path}"\n${entry.content}\n\`\`\``
+      )
+      .join('\n\n')
 
-    await expect(markdown).toMatchFileSnapshot(`./fixtures/index-${name}.output.md`);
-  });
+    await expect(markdown).toMatchFileSnapshot(
+      `./fixtures/index-${name}.output.md`
+    )
+  })
 }
 
 test('parse frontmatter', () => {
-  expect(xyzMatter('---\ntitle: hello world\ndescription: I love Fumadocs\n---\nwow looks cool.'))
-    .toMatchInlineSnapshot(`
-    {
-      "content": "wow looks cool.",
-      "data": {
-        "description": "I love Fumadocs",
-        "title": "hello world",
-      },
-      "matter": "---
-    title: hello world
-    description: I love Fumadocs
-    ---
-    ",
-    }
-  `);
-
   expect(
     xyzMatter(
-      '---\r\ntitle: hello world\r\ndescription: I love Fumadocs\r\n---\r\nwow looks cool.',
-    ),
+      '---\ntitle: hello world\ndescription: I love Fumadocs\n---\nwow looks cool.'
+    )
   ).toMatchInlineSnapshot(`
     {
       "content": "wow looks cool.",
@@ -201,9 +192,29 @@ test('parse frontmatter', () => {
     ---
     ",
     }
-  `);
+  `)
 
-  expect(xyzMatter('--- \ntitle: hello world\r\n---\r\nwow looks cool.')).toMatchInlineSnapshot(`
+  expect(
+    xyzMatter(
+      '---\r\ntitle: hello world\r\ndescription: I love Fumadocs\r\n---\r\nwow looks cool.'
+    )
+  ).toMatchInlineSnapshot(`
+    {
+      "content": "wow looks cool.",
+      "data": {
+        "description": "I love Fumadocs",
+        "title": "hello world",
+      },
+      "matter": "---
+    title: hello world
+    description: I love Fumadocs
+    ---
+    ",
+    }
+  `)
+
+  expect(xyzMatter('--- \ntitle: hello world\r\n---\r\nwow looks cool.'))
+    .toMatchInlineSnapshot(`
     {
       "content": "---
     title: hello world
@@ -212,5 +223,5 @@ test('parse frontmatter', () => {
       "data": {},
       "matter": "",
     }
-  `);
-});
+  `)
+})

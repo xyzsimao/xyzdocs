@@ -4,12 +4,12 @@ export interface I18nConfig<Languages extends string = string> {
    *
    * A page tree will be built for each language.
    */
-  languages: Languages[];
+  languages: Languages[]
 
   /**
    * Default locale if not specified
    */
-  defaultLanguage: Languages;
+  defaultLanguage: Languages
 
   /**
    * Don't show the locale prefix on URL.
@@ -22,25 +22,25 @@ export interface I18nConfig<Languages extends string = string> {
    *
    * @defaultValue 'never'
    */
-  hideLocale?: 'always' | 'default-locale' | 'never';
+  hideLocale?: 'always' | 'default-locale' | 'never'
 
   /**
    * Used by `loader()`, specify the way to parse i18n file structure.
    *
    * @defaultValue 'dot'
    */
-  parser?: 'dot' | 'dir' | 'none';
+  parser?: 'dot' | 'dir' | 'none'
 
   /**
    * the fallback language when the page has no translations available for a given locale.
    *
    * Default to `defaultLanguage`, no fallback when set to `null`.
    */
-  fallbackLanguage?: Languages | null;
+  fallbackLanguage?: Languages | null
 }
 
 export function defineI18n<Languages extends string>(
-  config: I18nConfig<Languages>,
+  config: I18nConfig<Languages>
 ): I18nConfig<Languages> {
-  return config;
+  return config
 }

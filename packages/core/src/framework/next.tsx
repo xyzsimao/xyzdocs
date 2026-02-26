@@ -1,18 +1,18 @@
-'use client';
-import { type Framework, FrameworkProvider } from '@/framework/index';
-import type { ReactNode } from 'react';
-import { useParams, usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
+'use client'
+import { type Framework, FrameworkProvider } from '@/framework/index'
+import type { ReactNode } from 'react'
+import { useParams, usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export function NextProvider({
   children,
   Link: CustomLink,
   Image: CustomImage,
 }: {
-  children: ReactNode;
-  Link?: Framework['Link'];
-  Image?: Framework['Image'];
+  children: ReactNode
+  Link?: Framework['Link']
+  Image?: Framework['Image']
 }) {
   return (
     <FrameworkProvider
@@ -24,5 +24,5 @@ export function NextProvider({
     >
       {children}
     </FrameworkProvider>
-  );
+  )
 }

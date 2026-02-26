@@ -7,4 +7,4 @@ export default defineConfig({
   target: 'es2023',
   entry: ['./src/index.ts', './src/client/index.ts'],
   format: 'esm',
-});
+})

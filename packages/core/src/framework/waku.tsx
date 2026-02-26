@@ -1,58 +1,58 @@
-'use client';
+'use client'
 
-import { type ReactNode, useMemo } from 'react';
-import { Link as WakuLink, useRouter } from 'waku';
-import { type Framework, FrameworkProvider } from './index.js';
+import { type ReactNode, useMemo } from 'react'
+import { Link as WakuLink, useRouter } from 'waku'
+import { type Framework, FrameworkProvider } from './index.js'
 
 const framework: Framework = {
   usePathname() {
-    const { path } = useRouter();
-    return path;
+    const { path } = useRouter()
+    return path
   },
   useParams() {
-    const { query } = useRouter();
+    const { query } = useRouter()
     return useMemo(() => {
-      const params = new URLSearchParams(query);
+      const params = new URLSearchParams(query)
       return Object.fromEntries(
         Array.from(params.entries()).map(([key, value]) => [
           key,
           Array.isArray(value) ? value[0] : value,
-        ]),
-      );
-    }, [query]);
+        ])
+      )
+    }, [query])
   },
   useRouter() {
-    const router = useRouter();
+    const router = useRouter()
 
     return useMemo(
       () => ({
         push(url: string) {
-          void router.push(url);
+          void router.push(url)
         },
         refresh() {
-          void router.push(router.path);
+          void router.push(router.path)
         },
       }),
-      [router],
-    );
+      [router]
+    )
   },
   Link({ href, prefetch = true, ...props }) {
     return (
       <WakuLink to={href!} unstable_prefetchOnEnter={prefetch} {...props}>
         {props.children}
       </WakuLink>
-    );
+    )
   },
-};
+}
 
 export function WakuProvider({
   children,
   Link: CustomLink,
   Image: CustomImage,
 }: {
-  children: ReactNode;
-  Link?: Framework['Link'];
-  Image?: Framework['Image'];
+  children: ReactNode
+  Link?: Framework['Link']
+  Image?: Framework['Image']
 }) {
   return (
     <FrameworkProvider
@@ -62,5 +62,5 @@ export function WakuProvider({
     >
       {children}
     </FrameworkProvider>
-  );
+  )
 }

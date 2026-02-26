@@ -1,4 +1,4 @@
-import type { Source } from '@/source';
+import type { Source } from '@/source'
 
 export const source: Source = {
   files: [
@@ -17,7 +17,7 @@ export const source: Source = {
       },
     },
   ],
-};
+}
 
 export const noMeta: Source = {
   files: [
@@ -36,4 +36,4 @@ export const noMeta: Source = {
       },
     },
   ],
-};
+}

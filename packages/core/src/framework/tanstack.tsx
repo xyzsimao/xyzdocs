@@ -1,6 +1,11 @@
-import { type ReactNode, useRef, useMemo } from 'react';
-import { type Framework, FrameworkProvider } from '@/framework/index';
-import { useParams, Link, useRouter, useRouterState } from '@tanstack/react-router';
+import { type ReactNode, useRef, useMemo } from 'react'
+import { type Framework, FrameworkProvider } from '@/framework/index'
+import {
+  useParams,
+  Link,
+  useRouter,
+  useRouterState,
+} from '@tanstack/react-router'
 
 const framework: Framework = {
   Link({ href, prefetch = true, ...props }) {
@@ -8,7 +13,7 @@ const framework: Framework = {
       <Link to={href} preload={prefetch ? 'intent' : false} {...props}>
         {props.children}
       </Link>
-    );
+    )
   },
   usePathname() {
     const { isLoading, pathname } = useRouterState({
@@ -16,39 +21,39 @@ const framework: Framework = {
         isLoading: state.isLoading,
         pathname: state.location.pathname,
       }),
-    });
+    })
 
-    const activePathname = useRef(pathname);
+    const activePathname = useRef(pathname)
     return useMemo(() => {
       if (isLoading) {
-        return activePathname.current;
+        return activePathname.current
       }
 
-      activePathname.current = pathname;
-      return pathname;
-    }, [isLoading, pathname]);
+      activePathname.current = pathname
+      return pathname
+    }, [isLoading, pathname])
   },
   useRouter() {
-    const router = useRouter();
+    const router = useRouter()
 
     return useMemo(
       () => ({
         push(url) {
           void router.navigate({
             href: url,
-          });
+          })
         },
         refresh() {
-          void router.invalidate();
+          void router.invalidate()
         },
       }),
-      [router],
-    );
+      [router]
+    )
   },
   useParams() {
-    return useParams({ strict: false });
+    return useParams({ strict: false })
   },
-};
+}
 
 /**
  * Fumadocs adapter for Tanstack Router/Start
@@ -58,9 +63,9 @@ export function TanstackProvider({
   Link: CustomLink,
   Image: CustomImage,
 }: {
-  children: ReactNode;
-  Link?: Framework['Link'];
-  Image?: Framework['Image'];
+  children: ReactNode
+  Link?: Framework['Link']
+  Image?: Framework['Image']
 }) {
   return (
     <FrameworkProvider
@@ -70,5 +75,5 @@ export function TanstackProvider({
     >
       {children}
     </FrameworkProvider>
-  );
+  )
 }

@@ -1,15 +1,15 @@
-import { remark } from 'remark';
-import { remarkHeading } from '@/mdx-plugins/remark-heading';
-import type { PluggableList } from 'unified';
-import type { Compatible } from 'vfile';
-import type { TOCItemType } from '@/toc';
+import { remark } from 'remark'
+import { remarkHeading } from '@/mdx-plugins/remark-heading'
+import type { PluggableList } from 'unified'
+import type { Compatible } from 'vfile'
+import type { TOCItemType } from '@/toc'
 
 /**
  * Get Table of Contents from markdown/mdx document (using remark)
  *
  * @param content - Markdown content or file
  */
-export function getTableOfContents(content: Compatible): TOCItemType[];
+export function getTableOfContents(content: Compatible): TOCItemType[]
 
 /**
  * Get Table of Contents from markdown/mdx document (using remark)
@@ -19,12 +19,12 @@ export function getTableOfContents(content: Compatible): TOCItemType[];
  */
 export function getTableOfContents(
   content: Compatible,
-  remarkPlugins: PluggableList,
-): Promise<TOCItemType[]>;
+  remarkPlugins: PluggableList
+): Promise<TOCItemType[]>
 
 export function getTableOfContents(
   content: Compatible,
-  remarkPlugins?: PluggableList,
+  remarkPlugins?: PluggableList
 ): TOCItemType[] | Promise<TOCItemType[]> {
   if (remarkPlugins) {
     return remark()
@@ -32,15 +32,15 @@ export function getTableOfContents(
       .use(remarkHeading)
       .process(content)
       .then((result) => {
-        if ('toc' in result.data) return result.data.toc as TOCItemType[];
+        if ('toc' in result.data) return result.data.toc as TOCItemType[]
 
-        return [];
-      });
+        return []
+      })
   }
 
   // compatible with sync usages
-  const result = remark().use(remarkHeading).processSync(content);
+  const result = remark().use(remarkHeading).processSync(content)
 
-  if ('toc' in result.data) return result.data.toc as TOCItemType[];
-  return [];
+  if ('toc' in result.data) return result.data.toc as TOCItemType[]
+  return []
 }

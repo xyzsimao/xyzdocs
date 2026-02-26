@@ -1,21 +1,21 @@
-import type * as PageTree from '@/page-tree/definitions';
+import type * as PageTree from '@/page-tree/definitions'
 
 /**
  * Flatten tree to an array of page nodes
  */
 export function flattenTree(nodes: PageTree.Node[]): PageTree.Item[] {
-  const out: PageTree.Item[] = [];
+  const out: PageTree.Item[] = []
 
   for (const node of nodes) {
     if (node.type === 'folder') {
-      if (node.index) out.push(node.index);
-      out.push(...flattenTree(node.children));
+      if (node.index) out.push(node.index)
+      out.push(...flattenTree(node.children))
     } else if (node.type === 'page') {
-      out.push(node);
+      out.push(node)
     }
   }
 
-  return out;
+  return out
 }
 
 /**
@@ -25,43 +25,43 @@ export function findNeighbour(
   tree: PageTree.Root,
   url: string,
   options?: {
-    separateRoot?: boolean;
-  },
+    separateRoot?: boolean
+  }
 ): {
-  previous?: PageTree.Item;
-  next?: PageTree.Item;
+  previous?: PageTree.Item
+  next?: PageTree.Item
 } {
-  const { separateRoot = true } = options ?? {};
-  const roots = separateRoot ? getPageTreeRoots(tree) : [tree];
-  if (tree.fallback) roots.push(tree.fallback);
+  const { separateRoot = true } = options ?? {}
+  const roots = separateRoot ? getPageTreeRoots(tree) : [tree]
+  if (tree.fallback) roots.push(tree.fallback)
 
   for (const root of roots) {
-    const list = flattenTree(root.children);
-    const idx = list.findIndex((item) => item.url === url);
-    if (idx === -1) continue;
+    const list = flattenTree(root.children)
+    const idx = list.findIndex((item) => item.url === url)
+    if (idx === -1) continue
 
     return {
       previous: list[idx - 1],
       next: list[idx + 1],
-    };
+    }
   }
 
-  return {};
+  return {}
 }
 
 export function getPageTreeRoots(
-  pageTree: PageTree.Root | PageTree.Folder,
+  pageTree: PageTree.Root | PageTree.Folder
 ): (PageTree.Root | PageTree.Folder)[] {
   const result = pageTree.children.flatMap((child) => {
-    if (child.type !== 'folder') return [];
-    const roots = getPageTreeRoots(child);
+    if (child.type !== 'folder') return []
+    const roots = getPageTreeRoots(child)
 
-    if (child.root) roots.push(child);
-    return roots;
-  });
+    if (child.root) roots.push(child)
+    return roots
+  })
 
-  if (!('type' in pageTree)) result.push(pageTree);
-  return result;
+  if (!('type' in pageTree)) result.push(pageTree)
+  return result
 }
 
 /**
@@ -69,9 +69,9 @@ export function getPageTreeRoots(
  */
 export function getPageTreePeers(
   treeOrTrees: PageTree.Root | Record<string, PageTree.Root>,
-  url: string,
+  url: string
 ): PageTree.Item[] {
-  return findSiblings(treeOrTrees, url).filter((item) => item.type === 'page');
+  return findSiblings(treeOrTrees, url).filter((item) => item.type === 'page')
 }
 
 /**
@@ -79,41 +79,43 @@ export function getPageTreePeers(
  */
 export function findSiblings(
   treeOrTrees: PageTree.Root | Record<string, PageTree.Root>,
-  url: string,
+  url: string
 ): PageTree.Node[] {
   // Check if it's a single tree or multiple trees (i18n)
   if ('children' in treeOrTrees) {
     // Single tree case
-    const tree = treeOrTrees as PageTree.Root;
-    const parent = findParent(tree, url);
-    if (!parent) return [];
+    const tree = treeOrTrees as PageTree.Root
+    const parent = findParent(tree, url)
+    if (!parent) return []
 
-    return parent.children.filter((item) => item.type !== 'page' || item.url !== url);
+    return parent.children.filter(
+      (item) => item.type !== 'page' || item.url !== url
+    )
   }
 
   // Multiple trees case
   for (const lang in treeOrTrees) {
-    const result = getPageTreePeers(treeOrTrees[lang], url);
-    if (result) return result;
+    const result = getPageTreePeers(treeOrTrees[lang], url)
+    if (result) return result
   }
 
-  return [];
+  return []
 }
 
 export function findParent(
   from: PageTree.Root | PageTree.Folder,
-  url: string,
+  url: string
 ): PageTree.Root | PageTree.Folder | undefined {
-  let result: PageTree.Root | PageTree.Folder | undefined;
+  let result: PageTree.Root | PageTree.Folder | undefined
 
   visit(from, (node, parent) => {
     if ('type' in node && node.type === 'page' && node.url === url) {
-      result = parent;
-      return 'break';
+      result = parent
+      return 'break'
     }
-  });
+  })
 
-  return result;
+  return result
 }
 
 /**
@@ -125,45 +127,46 @@ export function findPath(
   nodes: PageTree.Node[],
   matcher: (node: PageTree.Node) => boolean,
   options: {
-    includeSeparator?: boolean;
-  } = {},
+    includeSeparator?: boolean
+  } = {}
 ): PageTree.Node[] | null {
-  const { includeSeparator = true } = options;
+  const { includeSeparator = true } = options
 
   function run(nodes: PageTree.Node[]): PageTree.Node[] | undefined {
-    let separator: PageTree.Separator | undefined;
+    let separator: PageTree.Separator | undefined
 
     for (const node of nodes) {
       if (matcher(node)) {
-        const items: PageTree.Node[] = [];
-        if (separator) items.push(separator);
-        items.push(node);
+        const items: PageTree.Node[] = []
+        if (separator) items.push(separator)
+        items.push(node)
 
-        return items;
+        return items
       }
 
       if (node.type === 'separator' && includeSeparator) {
-        separator = node;
-        continue;
+        separator = node
+        continue
       }
 
       if (node.type === 'folder') {
-        const items = node.index && matcher(node.index) ? [node.index] : run(node.children);
+        const items =
+          node.index && matcher(node.index) ? [node.index] : run(node.children)
 
         if (items) {
-          items.unshift(node);
-          if (separator) items.unshift(separator);
+          items.unshift(node)
+          if (separator) items.unshift(separator)
 
-          return items;
+          return items
         }
       }
     }
   }
 
-  return run(nodes) ?? null;
+  return run(nodes) ?? null
 }
 
-const VisitBreak = Symbol('VisitBreak');
+const VisitBreak = Symbol('VisitBreak')
 
 /**
  * Perform a depth-first search on page tree visiting every node.
@@ -175,44 +178,44 @@ export function visit<Root extends PageTree.Node | PageTree.Root>(
   root: Root,
   visitor: <T extends PageTree.Node | PageTree.Root>(
     node: T,
-    parent?: PageTree.Root | PageTree.Folder,
-  ) => 'skip' | 'break' | T | void,
+    parent?: PageTree.Root | PageTree.Folder
+  ) => 'skip' | 'break' | T | void
 ): Root {
   function onNode<T extends PageTree.Node | PageTree.Root>(
     node: T,
-    parent?: PageTree.Root | PageTree.Folder,
+    parent?: PageTree.Root | PageTree.Folder
   ): T {
-    const result = visitor(node, parent);
+    const result = visitor(node, parent)
     switch (result) {
       case 'skip':
-        return node;
+        return node
       case 'break':
-        throw VisitBreak;
+        throw VisitBreak
       default:
-        if (result) node = result;
+        if (result) node = result
     }
 
     if ('index' in node && node.index) {
-      node.index = onNode(node.index, node);
+      node.index = onNode(node.index, node)
     }
 
     if ('fallback' in node && node.fallback) {
-      node.fallback = onNode(node.fallback, node);
+      node.fallback = onNode(node.fallback, node)
     }
 
     if ('children' in node) {
       for (let i = 0; i < node.children.length; i++) {
-        node.children[i] = onNode(node.children[i], node);
+        node.children[i] = onNode(node.children[i], node)
       }
     }
 
-    return node;
+    return node
   }
 
   try {
-    return onNode(root);
+    return onNode(root)
   } catch (e) {
-    if (e === VisitBreak) return root;
-    throw e;
+    if (e === VisitBreak) return root
+    throw e
   }
 }

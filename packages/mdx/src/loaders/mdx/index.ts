@@ -1,91 +1,103 @@
-import { xyzMatter } from '@/utils/xyz-matter';
-import type { Loader } from '@/loaders/adapter';
-import { z } from 'zod';
-import type { DocCollectionItem } from '@/config/build';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { createHash } from 'node:crypto';
-import type { ConfigLoader } from '@/loaders/config';
-import { mdxLoaderGlob } from '..';
+import { xyzMatter } from '@/utils/xyz-matter'
+import type { Loader } from '@/loaders/adapter'
+import { z } from 'zod'
+import type { DocCollectionItem } from '@/config/build'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import { createHash } from 'node:crypto'
+import type { ConfigLoader } from '@/loaders/config'
+import { mdxLoaderGlob } from '..'
 
 const querySchema = z.looseObject({
   only: z.literal(['frontmatter', 'all']).default('all'),
   collection: z.string().optional(),
   workspace: z.string().optional(),
-});
+})
 
 const cacheEntry = z.object({
   code: z.string(),
   map: z.any().optional(),
   hash: z.string().optional(),
-});
+})
 
-type CacheEntry = z.infer<typeof cacheEntry>;
+type CacheEntry = z.infer<typeof cacheEntry>
 
 export function createMdxLoader({ getCore }: ConfigLoader): Loader {
   return {
     test: mdxLoaderGlob,
-    async load({ getSource, development: isDevelopment, query, compiler, filePath }) {
-      let core = await getCore();
-      const value = await getSource();
-      const matter = xyzMatter(value);
-      const { collection: collectionName, workspace, only } = querySchema.parse(query);
+    async load({
+      getSource,
+      development: isDevelopment,
+      query,
+      compiler,
+      filePath,
+    }) {
+      let core = await getCore()
+      const value = await getSource()
+      const matter = xyzMatter(value)
+      const {
+        collection: collectionName,
+        workspace,
+        only,
+      } = querySchema.parse(query)
       if (workspace) {
-        core = core.getWorkspaces().get(workspace) ?? core;
+        core = core.getWorkspaces().get(workspace) ?? core
       }
 
-      let after: (() => Promise<void>) | undefined;
+      let after: (() => Promise<void>) | undefined
 
-      const { experimentalBuildCache = false } = core.getConfig().global;
+      const { experimentalBuildCache = false } = core.getConfig().global
       if (!isDevelopment && experimentalBuildCache) {
-        const cacheDir = experimentalBuildCache;
-        const cacheKey = `${collectionName ?? 'global'}_${generateCacheHash(filePath)}`;
+        const cacheDir = experimentalBuildCache
+        const cacheKey = `${collectionName ?? 'global'}_${generateCacheHash(filePath)}`
 
         const cached = await fs
           .readFile(path.join(cacheDir, cacheKey))
           .then((content) => cacheEntry.parse(JSON.parse(content.toString())))
-          .catch(() => null);
+          .catch(() => null)
 
-        if (cached && cached.hash === generateCacheHash(value)) return cached;
+        if (cached && cached.hash === generateCacheHash(value)) return cached
         after = async () => {
-          await fs.mkdir(cacheDir, { recursive: true });
+          await fs.mkdir(cacheDir, { recursive: true })
           await fs.writeFile(
             path.join(cacheDir, cacheKey),
             JSON.stringify({
               ...out,
               hash: generateCacheHash(value),
-            } satisfies CacheEntry),
-          );
-        };
+            } satisfies CacheEntry)
+          )
+        }
       }
 
-      const collection = collectionName ? core.getCollection(collectionName) : undefined;
+      const collection = collectionName
+        ? core.getCollection(collectionName)
+        : undefined
 
-      let docCollection: DocCollectionItem | undefined;
+      let docCollection: DocCollectionItem | undefined
       switch (collection?.type) {
         case 'doc':
-          docCollection = collection;
-          break;
+          docCollection = collection
+          break
         case 'docs':
-          docCollection = collection.docs;
-          break;
+          docCollection = collection.docs
+          break
       }
 
       if (docCollection) {
         matter.data = await core.transformFrontmatter(
           { collection: docCollection, filePath, source: value },
-          matter.data as Record<string, unknown>,
-        );
+          matter.data as Record<string, unknown>
+        )
       }
 
       if (only === 'frontmatter') {
         return {
           code: `export const frontmatter = ${JSON.stringify(matter.data)}`,
           map: null,
-        };
+        }
       }
 
-      const { buildMDX } = await import('@/loaders/mdx/build-mdx');
+      const { buildMDX } = await import('@/loaders/mdx/build-mdx')
       const compiled = await buildMDX(core, docCollection, {
         isDevelopment,
         // ensure the line number is correct in errors
@@ -94,29 +106,29 @@ export function createMdxLoader({ getCore }: ConfigLoader): Loader {
         frontmatter: matter.data as Record<string, unknown>,
         _compiler: compiler,
         environment: 'bundler',
-      });
+      })
 
       const out = {
         code: String(compiled.value),
         map: compiled.map,
-      };
+      }
 
-      await after?.();
-      return out;
+      await after?.()
+      return out
     },
-  };
+  }
 }
 
 function generateCacheHash(input: string): string {
-  return createHash('md5').update(input).digest('hex');
+  return createHash('md5').update(input).digest('hex')
 }
 
 function countLines(s: string) {
-  let num = 0;
+  let num = 0
 
   for (const c of s) {
-    if (c === '\n') num++;
+    if (c === '\n') num++
   }
 
-  return num;
+  return num
 }

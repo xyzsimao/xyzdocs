@@ -1,4 +1,4 @@
-import type { Source, SourceConfig } from '@/source';
+import type { Source, SourceConfig } from '@/source'
 
 export const source: Source<SourceConfig> = {
   files: [
@@ -54,4 +54,4 @@ export const source: Source<SourceConfig> = {
       },
     },
   ],
-};
+}

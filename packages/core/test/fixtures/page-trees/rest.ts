@@ -1,4 +1,4 @@
-import { Source } from '@/source';
+import { Source } from '@/source'
 
 export const source: Source = {
   files: [
@@ -24,7 +24,7 @@ export const source: Source = {
       },
     },
   ],
-};
+}
 
 // priority to determine the owner of a node (from top to low):
 // 1. directly specified (e.g. path in `pages`).
@@ -82,4 +82,4 @@ export const withPriority: Source = {
       },
     },
   ],
-};
+}

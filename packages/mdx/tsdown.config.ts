@@ -1,11 +1,11 @@
-import { defineConfig } from 'tsdown';
+import { defineConfig } from 'tsdown'
 
-const external = ['next', 'typescript', 'bun'];
+const external = ['next', 'typescript', 'bun']
 
 const noExternal = [
   // TODO: remove this when the min `xyzdocs-core` version is above 16.2.3
   'xyzdocs-core/source/schema',
-];
+]
 
 export default defineConfig([
   {
@@ -36,4 +36,4 @@ export default defineConfig([
     fixedExtension: false,
     target: 'node22',
   },
-]);
+])

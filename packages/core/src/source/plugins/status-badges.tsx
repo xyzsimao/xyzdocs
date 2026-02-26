@@ -1,22 +1,22 @@
-import type { LoaderPlugin } from '@/source/loader';
-import type * as PageTree from '@/page-tree/definitions';
-import type { ReactNode } from 'react';
+import type { LoaderPlugin } from '@/source/loader'
+import type * as PageTree from '@/page-tree/definitions'
+import type { ReactNode } from 'react'
 
 export interface Item extends PageTree.Item {
   /**
    * Status badge to display in the sidebar (e.g., "new", "beta", "deprecated", "experimental").
    */
-  status?: string;
+  status?: string
 }
 
 export interface Folder extends Omit<PageTree.Folder, 'children' | 'index'> {
-  index?: Item;
-  children: Node[];
+  index?: Item
+  children: Node[]
 }
 
-export type Separator = PageTree.Separator;
+export type Separator = PageTree.Separator
 
-export type Node = Item | Folder | Separator;
+export type Node = Item | Folder | Separator
 
 /**
  * Plugin to add status badges to pages in the sidebar.
@@ -49,36 +49,38 @@ export type Node = Item | Folder | Separator;
  */
 export function statusBadgesPlugin(
   options: {
-    renderBadge?: (status: string) => ReactNode;
-  } = {},
+    renderBadge?: (status: string) => ReactNode
+  } = {}
 ): LoaderPlugin {
-  const { renderBadge = (status) => <span data-status={status}>{status}</span> } = options;
+  const {
+    renderBadge = (status) => <span data-status={status}>{status}</span>,
+  } = options
 
   return {
     name: 'fumadocs:status-badges',
     transformPageTree: {
       file(node, filePath) {
-        if (!filePath) return node;
+        if (!filePath) return node
 
-        const file = this.storage.read(filePath);
+        const file = this.storage.read(filePath)
         if (
           file?.format === 'page' &&
           'status' in file.data &&
           typeof file.data.status === 'string'
         ) {
-          const status = file.data.status;
+          const status = file.data.status
 
           node.name = (
             <>
               {node.name}
               {renderBadge(status)}
             </>
-          );
-          (node as Item).status = status;
+          )
+          ;(node as Item).status = status
         }
 
-        return node;
+        return node
       },
     },
-  };
+  }
 }

@@ -1,6 +1,6 @@
-import { createI18nSearchAPI, createSearchAPI } from '@/search/server';
-import { expect, test } from 'vitest';
-import { structure } from '@/mdx-plugins';
+import { createI18nSearchAPI, createSearchAPI } from '@/search/server'
+import { expect, test } from 'vitest'
+import { structure } from '@/mdx-plugins'
 
 test('Search API', async () => {
   const api = createSearchAPI('simple', {
@@ -16,11 +16,11 @@ test('Search API', async () => {
         url: '/nothing',
       },
     ],
-  });
+  })
 
-  expect(await api.search('Hello')).toHaveLength(1);
-  expect(await api.search('pterodactyl')).toHaveLength(0);
-});
+  expect(await api.search('Hello')).toHaveLength(1)
+  expect(await api.search('pterodactyl')).toHaveLength(0)
+})
 
 test('Search API Advanced', async () => {
   const api = createSearchAPI('advanced', {
@@ -31,7 +31,7 @@ test('Search API Advanced', async () => {
         structuredData: structure(
           `## Hello World
 
-something`,
+something`
         ),
         url: '/',
         tag: 'my-tag',
@@ -42,17 +42,17 @@ something`,
         structuredData: structure(
           `## My Page
 
-something`,
+something`
         ),
         url: '/page',
         tag: 'test',
       },
     ],
-  });
+  })
 
-  expect(await api.search('Page')).toHaveLength(2);
-  expect(await api.search('something')).toHaveLength(4);
-  expect(await api.search('', { tag: 'my-tag' })).toHaveLength(3);
+  expect(await api.search('Page')).toHaveLength(2)
+  expect(await api.search('something')).toHaveLength(4)
+  expect(await api.search('', { tag: 'my-tag' })).toHaveLength(3)
 
   expect(await api.search('Hello')).toMatchInlineSnapshot(`
     [
@@ -90,8 +90,8 @@ something`,
         "url": "/#hello-world",
       },
     ]
-  `);
-});
+  `)
+})
 
 test('Search API I18n', async () => {
   const api = createI18nSearchAPI('simple', {
@@ -113,13 +113,13 @@ test('Search API I18n', async () => {
         locale: 'en',
       },
     ],
-  });
+  })
 
-  expect(await api.search('English', { locale: 'en' })).toHaveLength(1);
-  expect(await api.search('amico', { locale: 'italian' })).toHaveLength(1);
-  expect(await api.search('italian', { locale: 'en' })).toHaveLength(0);
-  const exported = await api.export();
-  expect(exported.type).toBe('i18n');
+  expect(await api.search('English', { locale: 'en' })).toHaveLength(1)
+  expect(await api.search('amico', { locale: 'italian' })).toHaveLength(1)
+  expect(await api.search('italian', { locale: 'en' })).toHaveLength(0)
+  const exported = await api.export()
+  expect(exported.type).toBe('i18n')
 
   if (exported.type === 'i18n')
     expect(Object.keys(exported.data)).toMatchInlineSnapshot(`
@@ -127,5 +127,5 @@ test('Search API I18n', async () => {
       "italian",
       "en",
     ]
-  `);
-});
+  `)
+})

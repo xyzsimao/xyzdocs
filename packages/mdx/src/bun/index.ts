@@ -1,17 +1,17 @@
-import type { BunPlugin } from 'bun';
-import { createMdxLoader } from '@/loaders/mdx';
-import { buildConfig } from '@/config/build';
-import { pathToFileURL } from 'node:url';
-import { _Defaults, type CoreOptions, createCore } from '@/core';
-import { createIntegratedConfigLoader } from '@/loaders/config';
-import { createMetaLoader } from '@/loaders/meta';
-import { toBun } from '@/loaders/adapter';
+import type { BunPlugin } from 'bun'
+import { createMdxLoader } from '@/loaders/mdx'
+import { buildConfig } from '@/config/build'
+import { pathToFileURL } from 'node:url'
+import { _Defaults, type CoreOptions, createCore } from '@/core'
+import { createIntegratedConfigLoader } from '@/loaders/config'
+import { createMetaLoader } from '@/loaders/meta'
+import { toBun } from '@/loaders/adapter'
 
 export interface MdxPluginOptions extends Partial<CoreOptions> {
   /**
    * Skip meta file transformation step
    */
-  disableMetaFile?: boolean;
+  disableMetaFile?: boolean
 }
 
 export function createMdxPlugin(options: MdxPluginOptions = {}): BunPlugin {
@@ -20,27 +20,26 @@ export function createMdxPlugin(options: MdxPluginOptions = {}): BunPlugin {
     outDir = _Defaults.outDir,
     configPath = _Defaults.configPath,
     disableMetaFile = false,
-  } = options;
+  } = options
 
-
-  console.log("bun:")
+  console.log('bun:')
   return {
     name: 'bun-plugin-xyzdocs-mdx',
     async setup(build) {
-      const importPath = pathToFileURL(configPath).href;
+      const importPath = pathToFileURL(configPath).href
       const core = createCore({
         environment,
         outDir,
         configPath,
-      });
+      })
 
       await core.init({
         config: buildConfig(await import(importPath)),
-      });
+      })
 
-      const configLoader = createIntegratedConfigLoader(core);
-      toBun(createMdxLoader(configLoader))(build);
-      if (!disableMetaFile) toBun(createMetaLoader(configLoader))(build);
+      const configLoader = createIntegratedConfigLoader(core)
+      toBun(createMdxLoader(configLoader))(build)
+      if (!disableMetaFile) toBun(createMetaLoader(configLoader))(build)
     },
-  };
+  }
 }

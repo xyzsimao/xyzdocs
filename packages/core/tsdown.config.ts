@@ -26,4 +26,4 @@ export default defineConfig({
     'src/mdx-plugins/rehype-*.ts',
     'src/framework/*',
   ],
-});
+})

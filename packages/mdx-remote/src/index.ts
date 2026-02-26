@@ -1,8 +1,8 @@
-import type { TableOfContents } from 'xyzdocs-core/toc';
-import type { MdxContent } from '@/render';
+import type { TableOfContents } from 'xyzdocs-core/toc'
+import type { MdxContent } from '@/render'
 
-export * from './compile';
-export { parseFrontmatter } from './utils';
+export * from './compile'
+export { parseFrontmatter } from './utils'
 
 /**
  * @deprecated Use `compiler.render` instead

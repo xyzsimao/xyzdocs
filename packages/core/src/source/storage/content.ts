@@ -1,82 +1,88 @@
-import { FileSystem } from '@/source/storage/file-system';
-import { basename, dirname, joinPath, slash, splitPath } from '@/source/path';
-import type { ResolvedLoaderConfig } from '../loader';
-import type { SourceConfig } from '../source';
+import { FileSystem } from '@/source/storage/file-system'
+import { basename, dirname, joinPath, slash, splitPath } from '@/source/path'
+import type { ResolvedLoaderConfig } from '../loader'
+import type { SourceConfig } from '../source'
 
-export type ContentStorage<Config extends SourceConfig = SourceConfig> = FileSystem<
-  ContentStorageFile<Config>
->;
+export type ContentStorage<Config extends SourceConfig = SourceConfig> =
+  FileSystem<ContentStorageFile<Config>>
 
 export type ContentStorageFile<Config extends SourceConfig = SourceConfig> =
   | ContentStorageMetaFile<Config>
-  | ContentStoragePageFile<Config>;
+  | ContentStoragePageFile<Config>
 
-export interface ContentStorageMetaFile<Config extends SourceConfig = SourceConfig> {
-  path: string;
-  absolutePath?: string;
+export interface ContentStorageMetaFile<
+  Config extends SourceConfig = SourceConfig,
+> {
+  path: string
+  absolutePath?: string
 
-  format: 'meta';
-  data: Config['metaData'];
+  format: 'meta'
+  data: Config['metaData']
 }
 
-export interface ContentStoragePageFile<Config extends SourceConfig = SourceConfig> {
-  path: string;
-  absolutePath?: string;
+export interface ContentStoragePageFile<
+  Config extends SourceConfig = SourceConfig,
+> {
+  path: string
+  absolutePath?: string
 
-  format: 'page';
-  slugs: string[];
-  data: Config['pageData'];
+  format: 'page'
+  slugs: string[]
+  data: Config['pageData']
 }
 
 function isLocaleValid(locale: string) {
-  return locale.length > 0 && !/\d+/.test(locale);
+  return locale.length > 0 && !/\d+/.test(locale)
 }
 
 const parsers = {
   dir(path: string): [string, string?] {
-    const [locale, ...segs] = path.split('/');
+    const [locale, ...segs] = path.split('/')
 
-    if (locale && segs.length > 0 && isLocaleValid(locale)) return [segs.join('/'), locale];
+    if (locale && segs.length > 0 && isLocaleValid(locale))
+      return [segs.join('/'), locale]
 
-    return [path];
+    return [path]
   },
   dot(path: string): [string, string?] {
-    const dir = dirname(path);
-    const base = basename(path);
-    const parts = base.split('.');
-    if (parts.length < 3) return [path];
+    const dir = dirname(path)
+    const base = basename(path)
+    const parts = base.split('.')
+    if (parts.length < 3) return [path]
 
-    const [locale] = parts.splice(parts.length - 2, 1);
-    if (!isLocaleValid(locale)) return [path];
+    const [locale] = parts.splice(parts.length - 2, 1)
+    if (!isLocaleValid(locale)) return [path]
 
-    return [joinPath(dir, parts.join('.')), locale];
+    return [joinPath(dir, parts.join('.')), locale]
   },
   none(path: string): [string, string?] {
-    return [path];
+    return [path]
   },
-};
+}
 
-const EmptyLang = Symbol();
+const EmptyLang = Symbol()
 
 /**
  * convert input files into virtual file system.
  *
  * in the storage, locale codes are removed from file paths, hence the same file will have same file paths in every storage.
  */
-export function createContentStorageBuilder(loaderConfig: ResolvedLoaderConfig) {
-  const { source, plugins = [], i18n } = loaderConfig;
+export function createContentStorageBuilder(
+  loaderConfig: ResolvedLoaderConfig
+) {
+  const { source, plugins = [], i18n } = loaderConfig
 
-  const parser = i18n ? parsers[i18n.parser ?? 'dot'] : parsers.none;
+  const parser = i18n ? parsers[i18n.parser ?? 'dot'] : parsers.none
   const normalized = new Map<
     string | typeof EmptyLang,
     {
-      pathWithoutLocale: string;
-      file: ContentStorageFile;
+      pathWithoutLocale: string
+      file: ContentStorageFile
     }[]
-  >();
+  >()
 
   for (const inputFile of source.files) {
-    let file: ContentStorageFile;
+    let file: ContentStorageFile
     if (inputFile.type === 'page') {
       file = {
         format: 'page',
@@ -85,63 +91,71 @@ export function createContentStorageBuilder(loaderConfig: ResolvedLoaderConfig) 
         slugs: inputFile.slugs as string[],
         data: inputFile.data,
         absolutePath: inputFile.absolutePath,
-      };
+      }
     } else {
       file = {
         format: 'meta',
         path: normalizePath(inputFile.path),
         absolutePath: inputFile.absolutePath,
         data: inputFile.data,
-      };
+      }
     }
 
-    const [pathWithoutLocale, locale = i18n ? i18n.defaultLanguage : EmptyLang] = parser(file.path);
-    const list = normalized.get(locale) ?? [];
+    const [
+      pathWithoutLocale,
+      locale = i18n ? i18n.defaultLanguage : EmptyLang,
+    ] = parser(file.path)
+    const list = normalized.get(locale) ?? []
     list.push({
       pathWithoutLocale,
       file,
-    });
-    normalized.set(locale, list);
+    })
+    normalized.set(locale, list)
   }
 
-  function makeStorage(locale: string | typeof EmptyLang, inherit?: ContentStorage) {
-    const storage = new FileSystem(inherit);
+  function makeStorage(
+    locale: string | typeof EmptyLang,
+    inherit?: ContentStorage
+  ) {
+    const storage = new FileSystem(inherit)
     for (const { pathWithoutLocale, file } of normalized.get(locale) ?? []) {
-      storage.write(pathWithoutLocale, file);
+      storage.write(pathWithoutLocale, file)
     }
 
-    const context = { storage };
+    const context = { storage }
     for (const plugin of plugins) {
-      plugin.transformStorage?.(context);
+      plugin.transformStorage?.(context)
     }
 
-    return storage;
+    return storage
   }
 
   return {
     i18n(): Record<string, ContentStorage> {
-      const storages: Record<string, ContentStorage> = {};
-      if (!i18n) return storages;
+      const storages: Record<string, ContentStorage> = {}
+      if (!i18n) return storages
 
       const fallbackLang =
-        i18n.fallbackLanguage !== null ? (i18n.fallbackLanguage ?? i18n.defaultLanguage) : null;
+        i18n.fallbackLanguage !== null
+          ? (i18n.fallbackLanguage ?? i18n.defaultLanguage)
+          : null
 
       function scan(lang: string): ContentStorage {
-        if (storages[lang]) return storages[lang];
+        if (storages[lang]) return storages[lang]
 
         return (storages[lang] = makeStorage(
           lang,
-          fallbackLang && fallbackLang !== lang ? scan(fallbackLang) : undefined,
-        ));
+          fallbackLang && fallbackLang !== lang ? scan(fallbackLang) : undefined
+        ))
       }
 
-      for (const lang of i18n.languages) scan(lang);
-      return storages;
+      for (const lang of i18n.languages) scan(lang)
+      return storages
     },
     single(): ContentStorage {
-      return makeStorage(EmptyLang);
+      return makeStorage(EmptyLang)
     },
-  };
+  }
 }
 
 /**
@@ -150,8 +164,8 @@ export function createContentStorageBuilder(loaderConfig: ResolvedLoaderConfig) 
  * @throws Throws error if path starts with `./` or `../`
  */
 function normalizePath(path: string): string {
-  const segments = splitPath(slash(path));
+  const segments = splitPath(slash(path))
   if (segments[0] === '.' || segments[0] === '..')
-    throw new Error("It must not start with './' or '../'");
-  return segments.join('/');
+    throw new Error("It must not start with './' or '../'")
+  return segments.join('/')
 }

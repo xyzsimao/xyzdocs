@@ -1,49 +1,49 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 
 interface ID {
   /**
    * ID for the node, unique in all page trees (even across different locales)
    */
-  $id?: string;
+  $id?: string
 }
 
 export interface Root extends ID {
-  name: ReactNode;
-  children: Node[];
+  name: ReactNode
+  children: Node[]
   /**
    * Another page tree that won't be displayed unless being opened.
    */
-  fallback?: Root;
+  fallback?: Root
 }
 
-export type Node = Item | Separator | Folder;
+export type Node = Item | Separator | Folder
 
 export interface Item extends ID {
   /**
    * @internal
    */
   $ref?: {
-    file: string;
-  };
+    file: string
+  }
 
-  type: 'page';
-  name: ReactNode;
-  url: string;
+  type: 'page'
+  name: ReactNode
+  url: string
   /**
    * Whether the link should be treated as external (e.g. use HTML <a> tag).
    *
    * When unspecified, it depends on the value of `url`.
    */
-  external?: boolean;
+  external?: boolean
 
-  description?: ReactNode;
-  icon?: ReactNode;
+  description?: ReactNode
+  icon?: ReactNode
 }
 
 export interface Separator extends ID {
-  type: 'separator';
-  name?: ReactNode;
-  icon?: ReactNode;
+  type: 'separator'
+  name?: ReactNode
+  icon?: ReactNode
 }
 
 export interface Folder extends ID {
@@ -51,16 +51,16 @@ export interface Folder extends ID {
    * @internal
    */
   $ref?: {
-    metaFile?: string;
-  };
+    metaFile?: string
+  }
 
-  type: 'folder';
-  name: ReactNode;
-  description?: ReactNode;
-  root?: boolean;
-  defaultOpen?: boolean;
-  collapsible?: boolean;
-  index?: Item;
-  icon?: ReactNode;
-  children: Node[];
+  type: 'folder'
+  name: ReactNode
+  description?: ReactNode
+  root?: boolean
+  defaultOpen?: boolean
+  collapsible?: boolean
+  index?: Item
+  icon?: ReactNode
+  children: Node[]
 }

@@ -1,12 +1,12 @@
-import type { ShikiTransformer } from 'shiki';
+import type { ShikiTransformer } from 'shiki'
 
 export type CodeBlockIcon =
   | {
-      viewBox: string;
-      fill: string;
-      d: string;
+      viewBox: string
+      fill: string
+      d: string
     }
-  | string;
+  | string
 
 const defaultShortcuts: Record<string, string> = {
   js: 'javascript',
@@ -22,7 +22,7 @@ const defaultShortcuts: Record<string, string> = {
   shell: 'shellscript',
   zsh: 'shellscript',
   'c++': 'cpp',
-};
+}
 
 // From https://simpleicons.org
 // Java - Not supported, https://github.com/simple-icons/simple-icons/issues/7374
@@ -127,11 +127,11 @@ const defaultIcons: Record<string, CodeBlockIcon> = {
     fill: 'currentColor',
     d: 'M 6,1 C 4.354992,1 3,2.354992 3,4 v 16 c 0,1.645008 1.354992,3 3,3 h 12 c 1.645008,0 3,-1.354992 3,-3 V 8 7 A 1.0001,1.0001 0 0 0 20.707031,6.2929687 l -5,-5 A 1.0001,1.0001 0 0 0 15,1 h -1 z m 0,2 h 7 v 3 c 0,1.645008 1.354992,3 3,3 h 3 v 11 c 0,0.564129 -0.435871,1 -1,1 H 6 C 5.4358712,21 5,20.564129 5,20 V 4 C 5,3.4358712 5.4358712,3 6,3 Z M 15,3.4140625 18.585937,7 H 16 C 15.435871,7 15,6.5641288 15,6 Z',
   },
-};
+}
 
 export interface IconOptions {
-  shortcuts?: Record<string, string>;
-  extend?: Record<string, CodeBlockIcon>;
+  shortcuts?: Record<string, string>
+  extend?: Record<string, CodeBlockIcon>
 }
 
 /**
@@ -141,30 +141,30 @@ export function transformerIcon(options: IconOptions = {}): ShikiTransformer {
   const shortcuts = {
     ...defaultShortcuts,
     ...options.shortcuts,
-  };
+  }
   const icons = {
     ...defaultIcons,
     ...options.extend,
-  };
+  }
 
-  const defaultIcon = 'default' in icons ? icons.default : undefined;
+  const defaultIcon = 'default' in icons ? icons.default : undefined
   return {
     name: 'rehype-code:icon',
     pre(pre) {
-      const lang = this.options.lang;
-      if (!lang) return;
+      const lang = this.options.lang
+      if (!lang) return
 
-      const iconName = lang in shortcuts ? shortcuts[lang] : lang;
-      const icon = iconName in icons ? icons[iconName] : defaultIcon;
+      const iconName = lang in shortcuts ? shortcuts[lang] : lang
+      const icon = iconName in icons ? icons[iconName] : defaultIcon
 
       if (icon) {
         pre.properties.icon =
           typeof icon === 'string'
             ? icon
-            : `<svg viewBox="${icon.viewBox}"><path d="${icon.d}" fill="${icon.fill}" /></svg>`;
+            : `<svg viewBox="${icon.viewBox}"><path d="${icon.d}" fill="${icon.fill}" /></svg>`
       }
 
-      return pre;
+      return pre
     },
-  };
+  }
 }

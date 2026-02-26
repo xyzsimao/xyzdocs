@@ -14,6 +14,6 @@ Some text here
 
 ```ts
 function main() {
-  console.log('indexed');
+  console.log('indexed')
 }
 ```
