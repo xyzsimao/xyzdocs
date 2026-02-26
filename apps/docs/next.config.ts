@@ -1,8 +1,12 @@
 import type { NextConfig } from 'next';
+import { createMDX } from 'xyzdocs-mdx/next';
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+/** @type {import('next').NextConfig} */
+const config: NextConfig = {
+    reactStrictMode: true
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  configPath: 'source.config.ts',
+});
+export default withMDX(config);
