@@ -181,7 +181,7 @@ function transformerTab(): ShikiTransformer {
       const value = this.options.meta?.tab
       if (typeof value !== 'string') return root
       console.warn(
-        '[Fumadocs] For `tab="value" in codeblocks, please use `remarkCodeTab` plugin instead.'
+        '[xyzdocs] For `tab="value" in codeblocks, please use `remarkCodeTab` plugin instead.'
       )
 
       return {

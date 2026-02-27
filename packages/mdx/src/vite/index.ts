@@ -23,7 +23,7 @@ export interface PluginOptions {
   configPath?: string
 
   /**
-   * Update Vite config to fix module resolution of Fumadocs
+   * Update Vite config to fix module resolution of xyzdocs
    *
    * @defaultValue true
    */
@@ -69,15 +69,15 @@ export default async function mdx(
             'xyzdocs-core',
             'xyzdocs-ui',
             'xyzdocs-openapi',
-            '@fumadocs/base-ui',
-            '@fumadocs/ui',
+            '@xyzdocs/base-ui',
+            '@xyzdocs/ui',
           ],
           // only dedupe for public, non-transitive libs
           dedupe: [
             'xyzdocs-core',
             'xyzdocs-ui',
             'xyzdocs-openapi',
-            '@fumadocs/base-ui',
+            '@xyzdocs/base-ui',
           ],
         },
       } satisfies UserConfig)

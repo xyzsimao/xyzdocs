@@ -8,7 +8,7 @@ export default defineConfig({
   target: 'es2023',
   format: 'esm',
   entry: [
-    'src/toc.tsx',
+    'src/{toc,link,breadcrumb,dynamic-link}.tsx',
     'src/page-tree/index.ts',
     'src/{negotiation,content}/*',
     'src/content/mdx/preset-*.ts',

@@ -128,7 +128,7 @@
     "vite": {
       "optional": true
     },
-    "@fumadocs/mdx-remote": {
+    "@xyzdocs/mdx-remote": {
       "optional": true
     }
   }

@@ -4,7 +4,7 @@ import { InferPageType, InferMetaType, loader } from 'xyzdocs-core/source'
 // console.log(docs)
 export const source = loader({
   baseUrl: '/docs',
-  source: docs.toFumadocsSource(),
+  source: docs.toxyzdocsSource(),
 })
 
 export type Page = InferPageType<typeof source>

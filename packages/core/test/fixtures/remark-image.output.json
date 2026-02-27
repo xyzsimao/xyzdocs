@@ -130,23 +130,23 @@
             {
               "name": "alt",
               "type": "mdxJsxAttribute",
-              "value": "External",
+              "value": "External"
             },
             {
               "name": "src",
               "type": "mdxJsxAttribute",
-              "value": "https://fumadocs.dev/banner.png",
+              "value": "https://xyzdocs.dev/banner.png"
             },
             {
               "name": "width",
               "type": "mdxJsxAttribute",
-              "value": "1200",
+              "value": "1200"
             },
             {
               "name": "height",
               "type": "mdxJsxAttribute",
-              "value": "630",
-            },
+              "value": "630"
+            }
           ],
           "children": [],
           "name": "img",
@@ -154,17 +154,17 @@
             "end": {
               "column": 45,
               "line": 3,
-              "offset": 65,
+              "offset": 65
             },
             "start": {
               "column": 1,
               "line": 3,
-              "offset": 21,
-            },
+              "offset": 21
+            }
           },
           "title": null,
           "type": "mdxJsxFlowElement",
-          "url": "https://fumadocs.dev/banner.png",
+          "url": "https://xyzdocs.dev/banner.png"
         },
       ],
       "position": {

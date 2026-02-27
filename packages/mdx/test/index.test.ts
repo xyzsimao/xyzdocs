@@ -177,18 +177,18 @@ for (const { name, config } of cases) {
 test('parse frontmatter', () => {
   expect(
     xyzMatter(
-      '---\ntitle: hello world\ndescription: I love Fumadocs\n---\nwow looks cool.'
+      '---\ntitle: hello world\ndescription: I love xyzdocs\n---\nwow looks cool.'
     )
   ).toMatchInlineSnapshot(`
     {
       "content": "wow looks cool.",
       "data": {
-        "description": "I love Fumadocs",
+        "description": "I love xyzdocs",
         "title": "hello world",
       },
       "matter": "---
     title: hello world
-    description: I love Fumadocs
+    description: I love xyzdocs
     ---
     ",
     }
@@ -196,18 +196,18 @@ test('parse frontmatter', () => {
 
   expect(
     xyzMatter(
-      '---\r\ntitle: hello world\r\ndescription: I love Fumadocs\r\n---\r\nwow looks cool.'
+      '---\r\ntitle: hello world\r\ndescription: I love xyzdocs\r\n---\r\nwow looks cool.'
     )
   ).toMatchInlineSnapshot(`
     {
       "content": "wow looks cool.",
       "data": {
-        "description": "I love Fumadocs",
+        "description": "I love xyzdocs",
         "title": "hello world",
       },
       "matter": "---
     title: hello world
-    description: I love Fumadocs
+    description: I love xyzdocs
     ---
     ",
     }

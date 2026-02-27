@@ -74,7 +74,7 @@ test('Breadcrumbs', () => {
       },
       {
         type: 'page',
-        name: 'Fumadocs',
+        name: 'xyzdocs',
         url: '/docs/test2',
       },
       {
@@ -98,18 +98,16 @@ test('Breadcrumbs', () => {
 })
 
 test('I18n: Format URL', () => {
-  expect(DefaultFormatter.get(new NextURL('https://fumadocs.dev/en'))).toBe(
+  expect(DefaultFormatter.get(new NextURL('https://xyzdocs.dev/en'))).toBe('en')
+  expect(DefaultFormatter.get(new NextURL('https://xyzdocs.dev/en/test'))).toBe(
     'en'
   )
   expect(
-    DefaultFormatter.get(new NextURL('https://fumadocs.dev/en/test'))
-  ).toBe('en')
-  expect(
-    DefaultFormatter.get(new NextURL('https://fumadocs.dev'))
+    DefaultFormatter.get(new NextURL('https://xyzdocs.dev'))
   ).toBeUndefined()
   expect(
     DefaultFormatter.get(
-      new NextURL('https://fumadocs.dev/docs', {
+      new NextURL('https://xyzdocs.dev/docs', {
         nextConfig: {
           basePath: '/docs',
         },
@@ -118,7 +116,7 @@ test('I18n: Format URL', () => {
   ).toBeUndefined()
   expect(
     DefaultFormatter.get(
-      new NextURL('https://fumadocs.dev/docs/en/test', {
+      new NextURL('https://xyzdocs.dev/docs/en/test', {
         nextConfig: {
           basePath: '/docs',
         },
@@ -127,33 +125,33 @@ test('I18n: Format URL', () => {
   ).toBe('en')
 
   expect(
-    DefaultFormatter.add(new NextURL('https://fumadocs.dev'), 'cn').href
-  ).toBe('https://fumadocs.dev/cn/')
+    DefaultFormatter.add(new NextURL('https://xyzdocs.dev'), 'cn').href
+  ).toBe('https://xyzdocs.dev/cn/')
   expect(
     DefaultFormatter.add(
-      new NextURL('https://fumadocs.dev/docs', {
+      new NextURL('https://xyzdocs.dev/docs', {
         nextConfig: {
           basePath: '/docs',
         },
       }),
       'cn'
     ).href
-  ).toBe('https://fumadocs.dev/docs/cn/')
+  ).toBe('https://xyzdocs.dev/docs/cn/')
 
   expect(
-    DefaultFormatter.remove(new NextURL('https://fumadocs.dev/en')).href
-  ).toBe('https://fumadocs.dev/')
+    DefaultFormatter.remove(new NextURL('https://xyzdocs.dev/en')).href
+  ).toBe('https://xyzdocs.dev/')
   expect(
-    DefaultFormatter.remove(new NextURL('https://fumadocs.dev/en/test/hello'))
+    DefaultFormatter.remove(new NextURL('https://xyzdocs.dev/en/test/hello'))
       .href
-  ).toBe('https://fumadocs.dev/test/hello')
+  ).toBe('https://xyzdocs.dev/test/hello')
   expect(
     DefaultFormatter.remove(
-      new NextURL('https://fumadocs.dev/docs/en', {
+      new NextURL('https://xyzdocs.dev/docs/en', {
         nextConfig: {
           basePath: '/docs',
         },
       })
     ).href
-  ).toBe('https://fumadocs.dev/docs/')
+  ).toBe('https://xyzdocs.dev/docs/')
 })

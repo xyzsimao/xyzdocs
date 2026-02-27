@@ -3,7 +3,7 @@ import { visit } from '@/page-tree/utils'
 import { useMemo } from 'react'
 
 export interface SerializedPageTree {
-  $fumadocs_loader: 'page-tree'
+  $xyzdocs_loader: 'page-tree'
   data: object
 }
 
@@ -40,12 +40,12 @@ export function deserializePageTree(
 }
 
 /**
- * Deserialize loader data that is serialized by the server-side Fumadocs `loader()`, supported:
+ * Deserialize loader data that is serialized by the server-side xyzdocs `loader()`, supported:
  * - Page Tree
  *
  * other unrelated properties are kept in the output.
  */
-export function useFumadocsLoader<V>(serialized: V): Serialized<V> {
+export function usexyzdocsLoader<V>(serialized: V): Serialized<V> {
   return useMemo(() => {
     const out: Record<string, unknown> = {}
     for (const k in serialized) {
@@ -64,7 +64,7 @@ function isSerializedPageTree(v: unknown): v is SerializedPageTree {
   return (
     typeof v === 'object' &&
     v !== null &&
-    '$fumadocs_loader' in v &&
-    v.$fumadocs_loader === 'page-tree'
+    '$xyzdocs_loader' in v &&
+    v.$xyzdocs_loader === 'page-tree'
   )
 }

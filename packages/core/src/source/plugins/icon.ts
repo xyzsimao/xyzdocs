@@ -13,7 +13,7 @@ export function iconPlugin(resolveIcon: IconResolver): LoaderPlugin {
   }
 
   return {
-    name: 'fumadocs:icon',
+    name: 'xyzdocs:icon',
     transformPageTree: {
       file: replaceIcon,
       folder: replaceIcon,

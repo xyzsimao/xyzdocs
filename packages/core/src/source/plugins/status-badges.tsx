@@ -57,7 +57,7 @@ export function statusBadgesPlugin(
   } = options
 
   return {
-    name: 'fumadocs:status-badges',
+    name: 'xyzdocs:status-badges',
     transformPageTree: {
       file(node, filePath) {
         if (!filePath) return node
