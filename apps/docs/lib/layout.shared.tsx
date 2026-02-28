@@ -24,7 +24,7 @@ export const linkItems: LinkItemType[] = [
   },
   {
     type: 'icon',
-    url: 'https://github.com/fuma-nama/xyzdocs',
+    url: 'https://github.com/xyzsimao/xyzdocs',
     label: 'github',
     text: 'Github',
     icon: (
@@ -34,7 +34,7 @@ export const linkItems: LinkItemType[] = [
     ),
     external: true,
   },
-];
+]
 
 export const logo = (
   <>

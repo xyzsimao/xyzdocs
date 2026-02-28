@@ -8,6 +8,13 @@ import {
   metaSchema,
   frontmatterSchema,
 } from 'xyzdocs-mdx/config'
+import jsonSchema from 'xyzdocs-mdx/plugins/json-schema'
+import lastModified from 'xyzdocs-mdx/plugins/last-modified'
+import type { ShikiTransformer } from 'shiki'
+// import type { RemarkFeedbackBlockOptions } from 'xyzdocs-core/mdx-plugins'
+import type { ElementContent } from 'hast'
+import { shikiConfig } from './lib/shiki'
+import type { RemarkAutoTypeTableOptions } from 'xyzdocs-typescript'
 
 export const docs = defineDocs({
   dir: 'content/docs',
@@ -40,29 +47,18 @@ export const docs = defineDocs({
         await import('xyzdocs-core/mdx-plugins/remark-steps')
       const { remarkFeedbackBlock } =
         await import('xyzdocs-core/mdx-plugins/remark-feedback-block')
-      // const { transformerTwoslash } = await import('xyzdoc-twoslash')
-      // const { createFileSystemTypesCache } =
-      //   await import('xyzdocs-twoslash/cache-fs')
+      const { transformerTwoslash } = await import('xyzdocs-twoslash')
+      const { createFileSystemTypesCache } =
+        await import('xyzdocs-twoslash/cache-fs')
       const { default: remarkMath } = await import('remark-math')
-      // const { remarkTypeScriptToJavaScript } = await import(
-      //   'fumadocs-docgen/remark-ts2js'
-      // )
+      const { remarkTypeScriptToJavaScript } =
+        await import('xyzdocs-docgen/remark-ts2js')
       const { default: rehypeKatex } = await import('rehype-katex')
-
-      // const {
-      //   remarkAutoTypeTable,
-      //   createGenerator,
-      //   createFileSystemGeneratorCache,
-      // } = await import('xyzdocs-typescript')
-      // const {
-      //   remarkAutoTypeTable,
-      //   createGenerator,
-      //   createFileSystemGeneratorCache,
-      // } = await import('fumadocs-typescript')
-
-      // const generator = createGenerator({
-      //   cache: createFileSystemGeneratorCache('.next/fumadocs-typescript'),
-      // })
+      const {
+        remarkAutoTypeTable,
+        createGenerator,
+        createFileSystemGeneratorCache,
+      } = await import('xyzdocs-typescript')
 
       const feedbackOptions: RemarkFeedbackBlockOptions = {
         resolve(node) {
@@ -75,6 +71,12 @@ export const docs = defineDocs({
           )
         },
       }
+      const typeTableOptions: RemarkAutoTypeTableOptions = {
+        generator: createGenerator({
+          cache: createFileSystemGeneratorCache('.next/xyzdocs-typescript'),
+        }),
+        shiki: shikiConfig,
+      }
       return applyMdxPreset({
         remarkStructureOptions: {
           types: [...remarkStructureDefaultOptions.types, 'code'],
@@ -86,12 +88,13 @@ export const docs = defineDocs({
             light: 'catppuccin-latte',
             dark: 'catppuccin-mocha',
           },
-          // transformers: [
-          //   ...(rehypeCodeDefaultOptions.transformers ?? []),
-          //   transformerTwoslash({
-          //     typesCache: createFileSystemTypesCache(),
-          //   }),
-          // ],
+          transformers: [
+            ...(rehypeCodeDefaultOptions.transformers ?? []),
+            transformerTwoslash({
+              typesCache: createFileSystemTypesCache(),
+            }),
+            transformerEscape(),
+          ],
         },
         remarkCodeTabOptions: {
           parseMdx: true,
@@ -105,21 +108,47 @@ export const docs = defineDocs({
           remarkSteps,
           remarkMath,
           [remarkFeedbackBlock, feedbackOptions],
-          // [
-          //   remarkAutoTypeTable,
-          //   // {
-          //   //   generator,
-          //   // },
-          // ],
-          // remarkTypeScriptToJavaScript,
+          [remarkAutoTypeTable, typeTableOptions],
+          remarkTypeScriptToJavaScript,
         ],
         rehypePlugins: (v) => [rehypeKatex, ...v],
       })(environment)
     },
   },
 })
+
+
+
+function transformerEscape(): ShikiTransformer {
+  return {
+    name: '@shikijs/transformers:remove-notation-escape',
+    code(hast) {
+      function replace(node: ElementContent) {
+        if (node.type === 'text') {
+          node.value = node.value.replace('[\\!code', '[!code')
+        } else if ('children' in node) {
+          for (const child of node.children) {
+            replace(child)
+          }
+        }
+      }
+
+      replace(hast)
+      return hast
+    },
+  }
+}
 export const blogs = defineCollections({
   type: 'doc',
   dir: 'content/blog',
 })
-export default defineConfig()
+
+
+export default defineConfig({
+  plugins: [
+    jsonSchema({
+      insert: true,
+    }),
+    lastModified(),
+  ],
+})

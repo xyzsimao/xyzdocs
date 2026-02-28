@@ -9,7 +9,7 @@
   "homepage": "https://xyzdocs.dev",
   "license": "MIT",
   "author": "Fuma Nama",
-  "repository": "github:fuma-nama/xyzdocs",
+  "repository": "github:xyzsimao/xyzdocs",
   "bin": {
     "xyzdocs": "./dist/index.js"
   },

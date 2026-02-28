@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { type ComponentProps, type FC, type ReactNode } from 'react'
-// import * as Twoslash from 'xyzdocs-twoslash/ui'
+import * as Twoslash from 'xyzdocs-twoslash/ui'
 import { Callout } from 'xyzdocs-ui/components/callout'
 import { TypeTable } from 'xyzdocs-ui/components/type-table'
 // import * as Preview from '@/components/preview'
@@ -79,8 +79,8 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   //     </DocsPage>
   //   )
   // }
-
-  const { body: Mdx, toc } = await page.data
+  // console.log(page)
+  const { body: Mdx, toc, lastModified } = await page.data
 
   return (
     <DocsPage
@@ -105,7 +105,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         <Mdx
           components={getMDXComponents({
             Example,
-            // ...Twoslash,
+            ...Twoslash,
             a: ({ href, ...props }) => {
               const found = source.getPageByHref(href ?? '', {
                 dir: PathUtils.dirname(page.path),
@@ -151,10 +151,10 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
             Customisation,
           })}
         />
-        {/* {page.data.index ? <DocsCategory url={page.url} /> : null} */}
+        {page.data.index ? <DocsCategory url={page.url} /> : null}
       </div>
       <Feedback onSendAction={onPageFeedbackAction} />
-      {/* {lastModified && <PageLastUpdate date={lastModified} />} */}
+      {lastModified && <PageLastUpdate date={lastModified} />}
     </DocsPage>
   )
 }

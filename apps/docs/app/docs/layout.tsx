@@ -1,7 +1,11 @@
 import { DocsLayout } from 'xyzdocs-ui/layouts/docs';
 import { baseOptions, linkItems, logo } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
-// import { AISearch, AISearchPanel, AISearchTrigger } from '@/components/ai/search';
+import {
+  AISearch,
+  AISearchPanel,
+  AISearchTrigger,
+} from '@/components/ai/search'
 import 'katex/dist/katex.min.css';
 import { getSection } from '@/lib/source/navigation';
 
@@ -19,16 +23,18 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
         title: (
           <>
             {logo}
-            <span className="font-medium in-[.uwu]:hidden max-md:hidden">xyzdocs</span>
+            <span className="font-medium in-[.uwu]:hidden max-md:hidden">
+              xyzdocs
+            </span>
           </>
         ),
       }}
       sidebar={{
         tabs: {
           transform(option, node) {
-            const meta = source.getNodeMeta(node);
-            if (!meta || !node.icon) return option;
-            const color = `var(--${getSection(meta.path)}-color, var(--color-fd-foreground))`;
+            const meta = source.getNodeMeta(node)
+            if (!meta || !node.icon) return option
+            const color = `var(--${getSection(meta.path)}-color, var(--color-fd-foreground))`
 
             return {
               ...option,
@@ -44,17 +50,17 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
                   {node.icon}
                 </div>
               ),
-            };
+            }
           },
         },
       }}
     >
       {children}
 
-      {/* <AISearch>
+      <AISearch>
         <AISearchPanel />
         <AISearchTrigger />
-      </AISearch> */}
+      </AISearch>
     </DocsLayout>
-  );
+  )
 }

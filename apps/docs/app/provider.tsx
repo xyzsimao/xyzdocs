@@ -5,9 +5,9 @@ import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 
-// const SearchDialog = dynamic(() => import('@/components/search'), {
-//   ssr: false,
-// });
+const SearchDialog = dynamic(() => import('@/components/search'), {
+  ssr: false,
+})
 
 const inject = `
 const urlParams = new URLSearchParams(window.location.search);
@@ -27,14 +27,17 @@ if (item === 'true') {
 export function Provider({ children }: { children: ReactNode }) {
   return (
     <RootProvider
-      // search={{
-      //   SearchDialog,
-      // }}
+      search={{
+        SearchDialog,
+      }}
     >
       <TooltipProvider>
-        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: inject }} />
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: inject }}
+        />
         {children}
       </TooltipProvider>
     </RootProvider>
-  );
+  )
 }

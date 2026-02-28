@@ -13,6 +13,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "xyzdocs-openapi": "workspace:*",
+    "xyzdocs-docgen": "workspace:*",
+    "xyzdocs-twoslash": "workspace:*",
+    "xyzdocs-typescript": "workspace:*",
     "@ai-sdk/openai-compatible": "^2.0.22",
     "@ai-sdk/react": "^3.0.61",
     "@xyzdocs/mdx-remote": "workspace:*",

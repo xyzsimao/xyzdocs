@@ -5,6 +5,8 @@ import { Body } from './layout.client'
 // import { NextProvider } from 'xyzdocs-core/framework/next'
 import { RootProvider } from 'xyzdocs-ui/provider/next'
 import { Provider } from './provider'
+import { TreeContextProvider } from 'xyzdocs-ui/contexts/tree'
+import { source } from '@/lib/source'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -45,7 +47,9 @@ export default function RootLayout({
     >
       <Body>
         <RootProvider>
-          <Provider>{children}</Provider>
+          <TreeContextProvider tree={source.getPageTree()}>
+            <Provider>{children}</Provider>
+          </TreeContextProvider>
         </RootProvider>
       </Body>
     </html>
