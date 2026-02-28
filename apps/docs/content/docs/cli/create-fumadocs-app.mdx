@@ -1,0 +1,22 @@
+---
+title: create-xyzdoc-app
+description: The CLI to create new xyzdocs apps
+---
+
+## Overview
+
+Despite the classical CLI usage, you can also use it in scripts like:
+
+```npm
+npm install create-xyzdoc-app
+```
+
+```ts
+import { create } from 'create-xyzdoc-app';
+
+await create({
+  outputDir: 'my-app',
+  template: '+next+fuma-docs-mdx',
+  packageManager: 'pnpm',
+});
+```

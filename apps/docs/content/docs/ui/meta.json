@@ -1,0 +1,7 @@
+{
+  "title": "xyzdocs UI",
+  "description": "The default theme",
+  "icon": "PanelsTopLeft",
+  "root": true,
+  "pages": ["index",  "..."]
+}

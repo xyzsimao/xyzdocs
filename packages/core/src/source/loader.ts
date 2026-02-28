@@ -188,7 +188,7 @@ function createPageIndexer({ url }: ResolvedLoaderConfig) {
     scan(storage: ContentStorage, lang?: string) {
       for (const filePath of storage.getFiles()) {
         const item = storage.read(filePath)!
-        console.log(item)
+        // console.log(item)
         const prefix = lang ? `${lang}.` : '.'
         const path = prefix + filePath
 

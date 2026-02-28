@@ -95,7 +95,7 @@ export function resolveForwardedAPIs(
 }
 
 export const registry: Registry = {
-  name: 'fumadocs/ui',
+  name: 'xyzdocs/ui',
   dir: srcDir,
   tsconfigPath: '../tsconfig.json',
   packageJson: '../package.json',
@@ -106,18 +106,18 @@ export const registry: Registry = {
     },
   },
   onResolve(ref) {
-    if (ref.type !== 'file') return ref;
-    const filePath = path.relative(registry.dir, ref.file).replaceAll('\\', '/');
-    const [dir, rest] = splitDir(filePath);
+    if (ref.type !== 'file') return ref
+    const filePath = path.relative(registry.dir, ref.file).replaceAll('\\', '/')
+    const [dir, rest] = splitDir(filePath)
     switch (dir) {
       case 'contexts':
         return {
           type: 'custom',
           specifier: `<ui>/${dir}/${removeExtname(rest)}`,
-        };
+        }
     }
 
-    return ref;
+    return ref
   },
   components: [
     {
@@ -204,7 +204,7 @@ export const registry: Registry = {
     'xyzdocs-core': null,
     react: null,
   },
-};
+}
 
 function splitDir(filePath: string): [dir: string, rest: string] {
   const idx = filePath.indexOf('/');

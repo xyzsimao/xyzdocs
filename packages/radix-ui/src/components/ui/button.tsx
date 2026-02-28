@@ -13,7 +13,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: variants,
-      // fumadocs use `color` instead of `variant`
+      // xyzdocs use `color` instead of `variant`
       color: variants,
       size: {
         sm: 'gap-1 px-2 py-1.5 text-xs',
@@ -22,7 +22,7 @@ export const buttonVariants = cva(
         'icon-xs': 'p-1 [&_svg]:size-4',
       },
     },
-  },
-);
+  }
+)
 
 export type ButtonProps = VariantProps<typeof buttonVariants>;

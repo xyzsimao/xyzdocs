@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "(framework)",
+    "ui",
+    "headless",
+    "mdx",
+    "cli",
+    "miscellaneous",
+    "design-system"
+  ]
+}

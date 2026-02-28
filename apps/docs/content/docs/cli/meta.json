@@ -1,0 +1,6 @@
+{
+  "root": true,
+  "title": "xyzdocs CLI",
+  "description": "The CLI tool for docs automation",
+  "icon": "Terminal"
+}

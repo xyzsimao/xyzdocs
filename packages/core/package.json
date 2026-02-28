@@ -38,6 +38,14 @@
       "types": "./dist/page-tree/index.d.ts",
       "import": "./dist/page-tree/index.js"
     },
+    "./search": {
+      "types": "./dist/search/index.d.ts",
+      "import": "./dist/search/index.js"
+    },
+    "./search/*": {
+      "types": "./dist/search/*.d.ts",
+      "import": "./dist/search/*.js"
+    },
     "./source": {
       "types": "./dist/source/index.d.ts",
       "import": "./dist/source/index.js"

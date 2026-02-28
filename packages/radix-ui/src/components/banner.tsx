@@ -23,33 +23,33 @@ export function Banner({
   /**
    * @defaultValue 3rem
    */
-  height?: string;
+  height?: string
 
   /**
    * @defaultValue 'normal'
    */
-  variant?: BannerVariant;
+  variant?: BannerVariant
 
   /**
    * For rainbow variant only, customise the colors
    */
-  rainbowColors?: string[];
+  rainbowColors?: string[]
 
   /**
-   * Change Fumadocs layout styles
+   * Change xyzdocs layout styles
    *
    * @defaultValue true
    */
-  changeLayout?: boolean;
+  changeLayout?: boolean
 }) {
-  const [open, setOpen] = useState(true);
-  const globalKey = id ? `nd-banner-${id}` : null;
+  const [open, setOpen] = useState(true)
+  const globalKey = id ? `nd-banner-${id}` : null
 
   useEffect(() => {
-    if (globalKey) setOpen(localStorage.getItem(globalKey) !== 'true');
-  }, [globalKey]);
+    if (globalKey) setOpen(localStorage.getItem(globalKey) !== 'true')
+  }, [globalKey])
 
-  if (!open) return null;
+  if (!open) return null
 
   return (
     <div
@@ -60,7 +60,7 @@ export function Banner({
         variant === 'normal' && 'bg-fd-secondary',
         variant === 'rainbow' && 'bg-fd-background',
         !open && 'hidden',
-        props.className,
+        props.className
       )}
       style={{
         height,
@@ -73,7 +73,9 @@ export function Banner({
             : `:root { --fd-banner-height: ${height}; }`}
         </style>
       ) : null}
-      {globalKey ? <style>{`.${globalKey} #${id} { display: none; }`}</style> : null}
+      {globalKey ? (
+        <style>{`.${globalKey} #${id} { display: none; }`}</style>
+      ) : null}
       {globalKey ? (
         <script
           dangerouslySetInnerHTML={{
@@ -93,22 +95,23 @@ export function Banner({
           type="button"
           aria-label="Close Banner"
           onClick={() => {
-            setOpen(false);
-            if (globalKey) localStorage.setItem(globalKey, 'true');
+            setOpen(false)
+            if (globalKey) localStorage.setItem(globalKey, 'true')
           }}
           className={cn(
             buttonVariants({
               color: 'ghost',
-              className: 'absolute end-2 top-1/2 -translate-y-1/2 text-fd-muted-foreground/50',
+              className:
+                'absolute end-2 top-1/2 -translate-y-1/2 text-fd-muted-foreground/50',
               size: 'icon-sm',
-            }),
+            })
           )}
         >
           <X />
         </button>
       ) : null}
     </div>
-  );
+  )
 }
 
 const maskImage =
