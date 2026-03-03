@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+// import './geistdocs.css'
 import { Body } from './layout.client'
 // import { NextProvider } from 'xyzdocs-core/framework/next'
 import { RootProvider } from 'xyzdocs-ui/provider/next'

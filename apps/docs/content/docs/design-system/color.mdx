@@ -6,7 +6,7 @@ icon: Pen
 import { cn } from '@/lib/cn';
 import { semanticColors, semanticLevels } from './color.ts'
 
-## 颜色
+## 颜色 `color`
 
 颜色体系基于 [TailwindCSS 调色板](https://tailwindcss.com/docs/customizing-colors) 实现，主要包含语义化调色板、界面颜色和特殊颜色。下面分别进行介绍。
 
@@ -32,7 +32,7 @@ import { semanticColors, semanticLevels } from './color.ts'
             <div className="relative cursor-pointer semantic-color-item">
       <div
  className={`w-full h-8 rounded semantic-color-tile, bg-${color.tailwind}-${level}`  }
-  
+
         ></div>
             </div>
             <div className="text-xs px-0.5 text-fore">{level} </div>

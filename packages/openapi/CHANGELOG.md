@@ -1349,8 +1349,8 @@
 
   ```css
   @import "tailwindcss";
-  @import "fumadocs-ui/css/neutral.css";
-  @import "fumadocs-ui/css/preset.css";
+  @import "xyzdocs-ui/css/neutral.css";
+  @import "xyzdocs-ui/css/preset.css";
   /* do this */
   @import "fumadocs-openapi/css/preset.css";
   ```
@@ -1396,7 +1396,7 @@
   in your `mdx-components.tsx` (or where you pass MDX components):
 
   ```tsx
-  import defaultComponents from "fumadocs-ui/mdx";
+  import defaultComponents from "xyzdocs-ui/mdx";
   import { APIPage } from "fumadocs-openapi/ui";
   import { openapi } from "@/lib/source";
   import type { MDXComponents } from "mdx/types";
@@ -2681,12 +2681,12 @@
   Add the package to `content` under your Tailwind CSS configuration.
 
   ```js
-  import { createPreset, presets } from "fumadocs-ui/tailwind-plugin";
+  import { createPreset, presets } from "xyzdocs-ui/tailwind-plugin";
 
   /** @type {import('tailwindcss').Config} */
   export default {
     content: [
-      "./node_modules/fumadocs-ui/dist/**/*.js",
+      "./node_modules/xyzdocs-ui/dist/**/*.js",
       "./node_modules/fumadocs-openapi/dist/**/*.js",
     ],
     presets: [createPreset()],

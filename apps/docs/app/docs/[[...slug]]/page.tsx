@@ -21,6 +21,8 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import Link from 'xyzdocs-core/link'
+
+import { createRelativeLink } from 'xyzdocs-ui/mdx'
 import { findSiblings } from 'xyzdocs-core/page-tree'
 import { Card, Cards } from 'xyzdocs-ui/components/card'
 // import { getMDXComponents } from '@/mdx-components'
@@ -36,7 +38,7 @@ import {
 import { NotFound } from '@/components/not-found'
 import { getSuggestions } from './suggestions'
 import { PathUtils } from 'xyzdocs-core/source'
-import { getMDXComponents } from '@/mdx-components'
+
 import { Mermaid } from '@/components/mdx/mermaid'
 import { Installation } from '@/components/preview/installation'
 import { Customisation } from '@/components/preview/customisation'
@@ -46,6 +48,7 @@ import { Separator } from '@/components/ui/separator'
 import { CopyPage } from '@/components/geistdocs/copy-page'
 import { EditSource } from '@/components/geistdocs/edit-source'
 import { ScrollTop } from '@/components/geistdocs/scroll-top'
+import { getMDXComponents } from '@/components/geistdocs/mdx-components'
 
 
 // function PreviewRenderer({ preview }: { preview: string }): ReactNode {
@@ -120,52 +123,62 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         {/* {page.data.preview && <PreviewRenderer preview={page.data.preview} />} */}
         <Mdx
           components={getMDXComponents({
-            Example,
-            ...Twoslash,
-            a: ({ href, ...props }) => {
-              const found = source.getPageByHref(href ?? '', {
-                dir: PathUtils.dirname(page.path),
-              })
-
-              if (!found) return <Link href={href} {...props} />
-
-              return (
-                <HoverCard>
-                  <HoverCardTrigger
-                    href={
-                      found.hash
-                        ? `${found.page.url}#${found.hash}`
-                        : found.page.url
-                    }
-                    {...props}
-                  >
-                    {props.children}
-                  </HoverCardTrigger>
-                  <HoverCardContent className="text-sm">
-                    <p className="font-medium">{found.page.data.title}</p>
-                    <p className="text-fd-muted-foreground">
-                      {found.page.data.description}
-                    </p>
-                  </HoverCardContent>
-                </HoverCard>
-              )
+            components: {
+              ...Twoslash,
+              a: createRelativeLink(source, page),
+              DocsCategory: ({ url }) => {
+                return <DocsCategory url={url ?? page.url} />
+              },
+              // Add your custom components here
             },
-            FeedbackBlock: ({ children, ...props }) => (
-              <FeedbackBlock {...props} onSendAction={onBlockFeedbackAction}>
-                {children}
-              </FeedbackBlock>
-            ),
-            Banner,
-            Mermaid,
-            TypeTable,
-            Wrapper,
-            blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
-            DocsCategory: ({ url }) => {
-              return <DocsCategory url={url ?? page.url} />
-            },
-            Installation,
-            Customisation,
           })}
+          // components={getMDXComponents({
+          //   Example,
+          //   ...Twoslash,
+          //   a: ({ href, ...props }) => {
+          //     const found = source.getPageByHref(href ?? '', {
+          //       dir: PathUtils.dirname(page.path),
+          //     })
+
+          //     if (!found) return <Link href={href} {...props} />
+
+          //     return (
+          //       <HoverCard>
+          //         <HoverCardTrigger
+          //           href={
+          //             found.hash
+          //               ? `${found.page.url}#${found.hash}`
+          //               : found.page.url
+          //           }
+          //           {...props}
+          //         >
+          //           {props.children}
+          //         </HoverCardTrigger>
+          //         <HoverCardContent className="text-sm">
+          //           <p className="font-medium">{found.page.data.title}</p>
+          //           <p className="text-fd-muted-foreground">
+          //             {found.page.data.description}
+          //           </p>
+          //         </HoverCardContent>
+          //       </HoverCard>
+          //     )
+          //   },
+          //   FeedbackBlock: ({ children, ...props }) => (
+          //     <FeedbackBlock {...props} onSendAction={onBlockFeedbackAction}>
+          //       {children}
+          //     </FeedbackBlock>
+          //   ),
+          //   Banner,
+          //   Mermaid,
+          //   TypeTable,
+          //   Wrapper,
+          //   blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
+          //   DocsCategory: ({ url }) => {
+          //     return <DocsCategory url={url ?? page.url} />
+          //   },
+          //   Installation,
+          //   Customisation,
+          // })}
         />
         {page.data.index ? <DocsCategory url={page.url} /> : null}
       </div>

@@ -182,9 +182,9 @@
   Before:
 
   ```ts
-  import "fumadocs-ui/twoslash.css";
+  import "xyzdocs-ui/twoslash.css";
 
-  import { Popup } from "fumadocs-ui/twoslash/popup";
+  import { Popup } from "xyzdocs-ui/twoslash/popup";
   ```
 
   After:

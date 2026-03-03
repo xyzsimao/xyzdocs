@@ -9,15 +9,15 @@ import { highlight, type CoreHighlightOptions } from 'fumadocs-core/highlight/co
 import type { OpenAPIServer } from '@/server';
 import type { APIPageClientOptions } from './client';
 import type { CodeUsageGenerator } from './operation/usage-tabs';
-import { Heading } from 'fumadocs-ui/components/heading';
+import { Heading } from 'xyzdocs-ui/components/heading'
 import { createRehypeCode } from 'fumadocs-core/mdx-plugins/rehype-code.core';
 import { remarkGfm } from 'fumadocs-core/mdx-plugins/remark-gfm';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
+import defaultMdxComponents from 'xyzdocs-ui/mdx'
 import { remark } from 'remark';
 import remarkRehype from 'remark-rehype';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import * as JsxRuntime from 'react/jsx-runtime';
-import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
+import { CodeBlock, Pre } from 'xyzdocs-ui/components/codeblock'
 import type { SchemaUIOptions } from './schema';
 import type { ResponseTab } from './operation/response-tabs';
 import type { ExampleRequestItem } from './operation/request-tabs';

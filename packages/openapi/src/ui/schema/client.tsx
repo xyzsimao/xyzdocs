@@ -10,17 +10,26 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'fumadocs-ui/components/tabs';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from 'xyzdocs-ui/components/tabs'
 import type { InfoTag, SchemaUIGeneratedData } from '@/ui/schema';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from 'fumadocs-ui/components/ui/collapsible';
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
+} from 'xyzdocs-ui/components/ui/collapsible'
+import { buttonVariants } from 'xyzdocs-ui/components/ui/button'
 import { ChevronDown } from 'lucide-react';
 import { Badge } from '@/ui/components/method-label';
-import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from 'xyzdocs-ui/components/ui/popover'
 import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
 
