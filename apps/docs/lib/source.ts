@@ -44,3 +44,19 @@ export type Meta = InferMetaType<typeof source>
 // export const blog = loader(toxyzdocsSource(blogPosts, []), {
 //   baseUrl: '/blog',
 // });
+
+export const getLLMText = async (page: InferPageType<typeof source>) => {
+  const processed = await page.data.getText('raw')
+
+  // Clean up the markdown for LLM consumption
+  const cleaned = processed
+    // Remove import statements
+    .replace(/^import\s+.*?from\s+["'].*?["'];?\s*$/gm, '')
+    // Collapse multiple consecutive blank lines into a single blank line
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+
+  return `# ${page.data.title}
+
+${cleaned}`
+}

@@ -5,7 +5,7 @@ import { Callout } from 'xyzdocs-ui/components/callout'
 import { TypeTable } from 'xyzdocs-ui/components/type-table'
 // import * as Preview from '@/components/preview'
 import { createMetadata, getPageImage } from '@/lib/metadata'
-import { source } from '@/lib/source'
+import { getLLMText, source } from '@/lib/source'
 // import { Wrapper } from '@/components/preview/wrapper'
 // import { Mermaid } from '@/components/mdx/mermaid'
 import { Feedback, FeedbackBlock } from '@/components/feedback/client'
@@ -42,6 +42,11 @@ import { Installation } from '@/components/preview/installation'
 import { Customisation } from '@/components/preview/customisation'
 import { Wrapper } from '@/components/preview/wrapper'
 import { Example } from '@/components/example'
+import { Separator } from '@/components/ui/separator'
+import { CopyPage } from '@/components/geistdocs/copy-page'
+import { EditSource } from '@/components/geistdocs/edit-source'
+import { ScrollTop } from '@/components/geistdocs/scroll-top'
+
 
 // function PreviewRenderer({ preview }: { preview: string }): ReactNode {
 //   if (preview && preview in Preview) {
@@ -81,12 +86,23 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   // }
   // console.log(page)
   const { body: Mdx, toc, lastModified } = await page.data
-
+  const markdown = await getLLMText(page)
   return (
     <DocsPage
       toc={toc}
       tableOfContent={{
         style: 'clerk',
+        footer: (
+          <div className="my-3 space-y-3">
+            <Separator />
+            <EditSource path={page.path} />
+            <ScrollTop />
+            {/* <Feedback /> */}
+            <CopyPage text={markdown} />
+            {/* <AskAI href={page.url} />
+            <OpenInChat href={page.url} /> */}
+          </div>
+        ),
       }}
     >
       <h1 className="text-[1.75em] font-semibold">{page.data.title}</h1>

@@ -57,10 +57,10 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
     >
       {children}
 
-      <AISearch>
+      {/* <AISearch>
         <AISearchPanel />
         <AISearchTrigger />
-      </AISearch>
+      </AISearch> */}
     </DocsLayout>
   )
 }

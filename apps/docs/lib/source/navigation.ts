@@ -8,6 +8,8 @@ export function getSection(path: string | undefined) {
       mdx: 'mdx',
       cli: 'cli',
       headless: 'headless',
+      miscellaneous: 'miscellaneous',
+      // design-system: 'designsystem',
     }[dir] ?? 'framework'
-  );
+  )
 }

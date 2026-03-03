@@ -13,6 +13,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "radix-ui": "latest",
+    "@icons-pack/react-simple-icons": "^13.8.0",
     "xyzdocs-openapi": "workspace:*",
     "xyzdocs-docgen": "workspace:*",
     "xyzdocs-twoslash": "workspace:*",

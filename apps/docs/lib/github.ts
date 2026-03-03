@@ -7,7 +7,7 @@ import {
   type PageFeedback,
 } from '@/components/feedback/schema'
 
-export const repo = 'xyz_doc'
+export const repo = 'xyzdocs'
 export const owner = 'xyzsimao'
 export const DocsCategory = 'Docs Feedback';
 

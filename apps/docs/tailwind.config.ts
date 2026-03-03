@@ -1,4 +1,4 @@
-// import { createPreset } from 'xyzdocs-ui/tailwind-plugin';
+// import { createPreset } from 'xyzdocs-ui/tailwind-plugin'
 
 // /** @type {import('tailwindcss').Config} */
 // export default {
@@ -7,4 +7,4 @@
 //       addGlobalColors: true,
 //     }),
 //   ],
-// };
+// }

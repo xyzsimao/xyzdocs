@@ -54,14 +54,16 @@ export function SidebarContent({
             data-sidebar-placeholder=""
             className="sticky top-(--fd-docs-row-1) z-20 [grid-area:sidebar] pointer-events-none *:pointer-events-auto h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] md:layout:[--fd-sidebar-width:268px] max-md:hidden"
           >
-            {collapsed && <div className="absolute start-0 inset-y-0 w-4" {...rest} />}
+            {collapsed && (
+              <div className="absolute start-0 inset-y-0 w-4" {...rest} />
+            )}
             <aside
               id="nd-sidebar"
               ref={mergeRefs(ref, refProp, asideRef)}
               data-collapsed={collapsed}
               data-hovered={collapsed && hovered}
               className={cn(
-                'absolute flex flex-col w-full start-0 inset-y-0 items-end bg-fd-card text-sm border-e duration-250 *:w-(--fd-sidebar-width)',
+                'absolute flex flex-col w-full start-0 inset-y-0 items-center bg-fd-card text-sm border-e duration-250 *:w-(--fd-sidebar-width)',
                 collapsed && [
                   'inset-y-2 rounded-xl transition-transform border w-(--fd-sidebar-width)',
                   hovered
@@ -69,9 +71,10 @@ export function SidebarContent({
                     : '-translate-x-(--fd-sidebar-width) rtl:translate-x-full',
                 ],
                 ref.current &&
-                  (ref.current.getAttribute('data-collapsed') === 'true') !== collapsed &&
+                  (ref.current.getAttribute('data-collapsed') === 'true') !==
+                    collapsed &&
                   'transition-[width,inset-block,translate,background-color]',
-                className,
+                className
               )}
               {...props}
               {...rest}
@@ -83,7 +86,7 @@ export function SidebarContent({
             data-sidebar-panel=""
             className={cn(
               'fixed flex top-[calc(--spacing(4)+var(--fd-docs-row-3))] start-4 shadow-lg transition-opacity rounded-xl p-0.5 border bg-fd-muted text-fd-muted-foreground z-10',
-              (!collapsed || hovered) && 'pointer-events-none opacity-0',
+              (!collapsed || hovered) && 'pointer-events-none opacity-0'
             )}
           >
             <Base.SidebarCollapseTrigger
@@ -92,7 +95,7 @@ export function SidebarContent({
                   color: 'ghost',
                   size: 'icon-sm',
                   className: 'rounded-lg',
-                }),
+                })
               )}
             >
               <SidebarIcon />
@@ -102,7 +105,7 @@ export function SidebarContent({
         </>
       )}
     </Base.SidebarContent>
-  );
+  )
 }
 
 export function SidebarDrawer({
