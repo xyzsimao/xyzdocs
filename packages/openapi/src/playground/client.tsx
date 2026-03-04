@@ -80,26 +80,29 @@ export interface PlaygroundClientOptions {
   /**
    * transform fields for auth-specific parameters (e.g. header)
    */
-  transformAuthInputs?: (fields: AuthField[]) => AuthField[];
+  transformAuthInputs?: (fields: AuthField[]) => AuthField[]
 
   /**
    * Request timeout in seconds (default: 10s)
    */
-  requestTimeout?: number;
+  requestTimeout?: number
 
   components?: Partial<{
-    ResultDisplay: FC<{ data: FetchResult }>;
-  }>;
+    ResultDisplay: FC<{ data: FetchResult }>
+  }>
 
   /**
    * render the paremeter inputs of API endpoint.
    *
    * for updating values, use:
-   * - the `Custom.useController()` from `fumadocs-openapi/playground/client`.
+   * - the `Custom.useController()` from `xyzdocs-openapi/playground/client`.
    *
    * Recommended types packages: `json-schema-typed`, `openapi-types`.
    */
-  renderParameterField?: (fieldName: FieldKey, param: ParameterField) => ReactNode;
+  renderParameterField?: (
+    fieldName: FieldKey,
+    param: ParameterField
+  ) => ReactNode
 
   /**
    * render the input for API endpoint body.
@@ -109,10 +112,10 @@ export interface PlaygroundClientOptions {
   renderBodyField?: (
     fieldName: 'body',
     info: {
-      schema: ParsedSchema;
-      mediaType: string;
-    },
-  ) => ReactNode;
+      schema: ParsedSchema
+      mediaType: string
+    }
+  ) => ReactNode
 }
 
 const OauthDialog = lazy(() =>

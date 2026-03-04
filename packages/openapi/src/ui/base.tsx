@@ -5,13 +5,16 @@ import type { NoReference } from '@/utils/schema';
 import type { ProcessedDocument } from '@/utils/process-document';
 import { defaultAdapters, MediaAdapter } from '@/requests/media/adapter';
 import type { FC, ReactNode } from 'react';
-import { highlight, type CoreHighlightOptions } from 'fumadocs-core/highlight/core';
+import {
+  highlight,
+  type CoreHighlightOptions,
+} from 'xyzdocs-core/highlight/core'
 import type { OpenAPIServer } from '@/server';
 import type { APIPageClientOptions } from './client';
 import type { CodeUsageGenerator } from './operation/usage-tabs';
 import { Heading } from 'xyzdocs-ui/components/heading'
-import { createRehypeCode } from 'fumadocs-core/mdx-plugins/rehype-code.core';
-import { remarkGfm } from 'fumadocs-core/mdx-plugins/remark-gfm';
+import { createRehypeCode } from 'xyzdocs-core/mdx-plugins/rehype-code.core'
+import { remarkGfm } from 'xyzdocs-core/mdx-plugins/remark-gfm'
 import defaultMdxComponents from 'xyzdocs-ui/mdx'
 import { remark } from 'remark';
 import remarkRehype from 'remark-rehype';
@@ -21,7 +24,7 @@ import { CodeBlock, Pre } from 'xyzdocs-ui/components/codeblock'
 import type { SchemaUIOptions } from './schema';
 import type { ResponseTab } from './operation/response-tabs';
 import type { ExampleRequestItem } from './operation/request-tabs';
-import type { ResolvedShikiConfig } from 'fumadocs-core/highlight/config';
+import type { ResolvedShikiConfig } from 'xyzdocs-core/highlight/config'
 import { APIPage, type ApiPageProps, type OperationItem, type WebhookItem } from './api-page';
 
 export interface CreateAPIPageOptions {

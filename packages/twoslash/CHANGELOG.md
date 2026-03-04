@@ -1,4 +1,4 @@
-# fumadocs-twoslash
+# xyzdocs-twoslash
 
 ## 3.1.12
 
@@ -6,7 +6,7 @@
 
 - cdc97e0: Improve experience with Shiki Twoslash
 - Updated dependencies [c804ac6]
-  - fumadocs-ui@16.4.4
+  - xyzdocs-ui@16.4.4
 
 ## 3.1.11
 
@@ -14,7 +14,7 @@
 
 - b16a32f: Switch to tsdown for bundling
 - Updated dependencies [b16a32f]
-  - fumadocs-ui@16.4.2
+  - xyzdocs-ui@16.4.2
 
 ## 3.1.10
 
@@ -24,7 +24,7 @@
 - bc97236: bump deps
 - Updated dependencies [c0df2c4]
 - Updated dependencies [117ad86]
-  - fumadocs-ui@16.0.8
+  - xyzdocs-ui@16.0.8
 
 ## 3.1.9
 
@@ -37,7 +37,7 @@
 - Updated dependencies [5210f18]
 - Updated dependencies [42f09c3]
 - Updated dependencies [5966e23]
-  - fumadocs-ui@16.0.0
+  - xyzdocs-ui@16.0.0
 
 ## 3.1.8
 
@@ -46,7 +46,7 @@
 - a3a14e7: Bump deps
 - Updated dependencies [a3a14e7]
 - Updated dependencies [7b0d839]
-  - fumadocs-ui@15.8.3
+  - xyzdocs-ui@15.8.3
 
 ## 3.1.7
 
@@ -54,7 +54,7 @@
 
 - a76d244: Fix breaking types change from upstream 3.12.0
 - Updated dependencies [cedc494]
-  - fumadocs-ui@15.7.5
+  - xyzdocs-ui@15.7.5
 
 ## 3.1.6
 
@@ -63,7 +63,7 @@
 - 51e6687: Fix popup container styles
 - Updated dependencies [6de6ff3]
 - Updated dependencies [f0b1fee]
-  - fumadocs-ui@15.6.11
+  - xyzdocs-ui@15.6.11
 
 ## 3.1.5
 
@@ -79,7 +79,7 @@
 - Updated dependencies [b675728]
 - Updated dependencies [1b7bc4b]
 - Updated dependencies [82fc4c8]
-  - fumadocs-ui@15.5.2
+  - xyzdocs-ui@15.5.2
 
 ## 3.1.3
 
@@ -88,7 +88,7 @@
 - 721c927: Lazy load twoslasher
 - 3372792: Support line numbers in codeblock
 - Updated dependencies [3372792]
-  - fumadocs-ui@15.3.1
+  - xyzdocs-ui@15.3.1
 
 ## 3.1.2
 
@@ -97,7 +97,7 @@
 - 81fe2c2: Remove the need for placeholder lines
 - Updated dependencies [52b5ad8]
 - Updated dependencies [abce713]
-  - fumadocs-ui@15.3.0
+  - xyzdocs-ui@15.3.0
 
 ## 3.1.1
 
@@ -107,18 +107,18 @@
 - Updated dependencies [eb18da9]
 - Updated dependencies [085e39f]
 - Updated dependencies [4d50bcf]
-  - fumadocs-ui@15.2.7
+  - xyzdocs-ui@15.2.7
 
 ## 3.1.0
 
 ### Minor Changes
 
-- b49d236: Support `typesCache` option and `fumadocs-twoslash/cache-fs` similar to Vitepress
+- b49d236: Support `typesCache` option and `xyzdocs-twoslash/cache-fs` similar to Vitepress
 
 ### Patch Changes
 
 - Updated dependencies [6bc033a]
-  - fumadocs-ui@15.0.14
+  - xyzdocs-ui@15.0.14
 
 ## 3.0.1
 
@@ -128,7 +128,7 @@
 - Updated dependencies [7608f4e]
 - Updated dependencies [89ff3ae]
 - Updated dependencies [16c8944]
-  - fumadocs-ui@15.0.13
+  - xyzdocs-ui@15.0.13
 
 ## 3.0.0
 
@@ -141,14 +141,14 @@
 - Updated dependencies [a89d6e0]
 - Updated dependencies [a84f37a]
 - Updated dependencies [f2f9c3d]
-  - fumadocs-ui@15.0.0
+  - xyzdocs-ui@15.0.0
 
 ## 2.0.3
 
 ### Patch Changes
 
 - b9601fb: Update Shiki
-  - fumadocs-ui@14.7.6
+  - xyzdocs-ui@14.7.6
 
 ## 2.0.2
 
@@ -160,20 +160,20 @@
 - Updated dependencies [bebb16b]
 - Updated dependencies [9585561]
 - Updated dependencies [4766292]
-  - fumadocs-ui@14.6.0
+  - xyzdocs-ui@14.6.0
 
 ## 2.0.1
 
 ### Patch Changes
 
 - d6d290c: Upgrade Shiki
-  - fumadocs-ui@14.1.0
+  - xyzdocs-ui@14.1.0
 
 ## 2.0.0
 
 ### Major Changes
 
-- 9a10262: **Move Twoslash UI components to `fumadocs-twoslash`**
+- 9a10262: **Move Twoslash UI components to `xyzdocs-twoslash`**
 
   **why:** Isolate logic from Fumadocs UI
 
@@ -190,9 +190,9 @@
   After:
 
   ```ts
-  import "fumadocs-twoslash/twoslash.css";
+  import "xyzdocs-twoslash/twoslash.css";
 
-  import { Popup } from "fumadocs-twoslash/ui";
+  import { Popup } from "xyzdocs-twoslash/ui";
   ```
 
   **Tailwind CSS is now required for Twoslash integration.**
@@ -219,7 +219,7 @@
 - Updated dependencies [d9e908e]
 - Updated dependencies [be820c4]
 - Updated dependencies [be53a0e]
-  - fumadocs-ui@14.0.0
+  - xyzdocs-ui@14.0.0
 
 ## 1.1.3
 
@@ -229,7 +229,7 @@
 - Updated dependencies [0c251e5]
 - Updated dependencies [0c251e5]
 - Updated dependencies [0c251e5]
-  - fumadocs-ui@13.4.2
+  - xyzdocs-ui@13.4.2
 
 ## 1.1.2
 
@@ -240,7 +240,7 @@
 - Updated dependencies [32ca37a]
 - Updated dependencies [9aae448]
 - Updated dependencies [c542561]
-  - fumadocs-ui@13.3.0
+  - xyzdocs-ui@13.3.0
 
 ## 1.1.1
 
@@ -261,7 +261,7 @@
 - Updated dependencies [89190ae]
 - Updated dependencies [b02eebf]
 - Updated dependencies [4373231]
-  - fumadocs-ui@13.0.0
+  - xyzdocs-ui@13.0.0
 
 ## 1.1.0
 

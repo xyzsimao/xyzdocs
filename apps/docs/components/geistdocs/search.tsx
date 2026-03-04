@@ -1,6 +1,6 @@
 "use client";
 
-import { useDocsSearch } from "fumadocs-core/search/client";
+import { useDocsSearch } from 'xyzdocs-core/search/client'
 import {
   SearchDialog as FumadocsSearchDialog,
   SearchDialogClose,

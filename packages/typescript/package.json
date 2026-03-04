@@ -71,7 +71,7 @@
     "typescript": "*"
   },
   "peerDependenciesMeta": {
-    "fumadocs-ui": {
+    "xyzdocs-ui": {
       "optional": true
     },
     "@types/react": {

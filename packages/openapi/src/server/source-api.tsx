@@ -5,20 +5,20 @@ import type {
   PageTreeTransformer,
   Source,
   VirtualFile,
-} from 'fumadocs-core/source';
+} from 'xyzdocs-core/source'
 import type { OpenAPIServer } from '@/server/create';
 import type { SchemaToPagesOptions } from '@/utils/pages/preset-auto';
 import type { ApiPageProps } from '@/ui/api-page';
-import type { StructuredData } from 'fumadocs-core/mdx-plugins';
-import type { TOCItemType } from 'fumadocs-core/toc';
+import type { StructuredData } from 'xyzdocs-core/mdx-plugins'
+import type { TOCItemType } from 'xyzdocs-core/toc'
 import type { ProcessedDocument } from '@/utils/process-document';
 
-declare module 'fumadocs-core/source' {
+declare module 'xyzdocs-core/source' {
   export interface PageData {
     /**
      * Added by Fumadocs OpenAPI
      */
-    _openapi?: InternalOpenAPIMeta;
+    _openapi?: InternalOpenAPIMeta
   }
 }
 

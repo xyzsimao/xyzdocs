@@ -117,6 +117,44 @@ export const docs = defineDocs({
   },
 })
 
+export const blog = defineCollections({
+  type: 'doc',
+  dir: 'content/blog',
+  schema: frontmatterSchema.extend({
+    author: z.string(),
+    date: z.iso.date().or(z.date()),
+  }),
+  async: true,
+  async mdxOptions(environment) {
+    const { rehypeCodeDefaultOptions } =
+      await import('xyzdocs-core/mdx-plugins/rehype-code')
+    const { remarkSteps } =
+      await import('xyzdocs-core/mdx-plugins/remark-steps')
+
+    return applyMdxPreset({
+      rehypeCodeOptions: {
+        inline: 'tailing-curly-colon',
+        themes: {
+          light: 'catppuccin-latte',
+          dark: 'catppuccin-mocha',
+        },
+        transformers: [
+          ...(rehypeCodeDefaultOptions.transformers ?? []),
+          transformerEscape(),
+        ],
+      },
+      remarkCodeTabOptions: {
+        parseMdx: true,
+      },
+      remarkNpmOptions: {
+        persist: {
+          id: 'package-manager',
+        },
+      },
+      remarkPlugins: [remarkSteps],
+    })(environment)
+  },
+})
 
 
 function transformerEscape(): ShikiTransformer {
@@ -138,10 +176,6 @@ function transformerEscape(): ShikiTransformer {
     },
   }
 }
-export const blogs = defineCollections({
-  type: 'doc',
-  dir: 'content/blog',
-})
 
 
 export default defineConfig({

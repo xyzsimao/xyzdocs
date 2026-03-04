@@ -1,4 +1,4 @@
-import { docs } from 'xyzdocs-mdx:collections/server'
+import { docs, blog as blogPosts } from 'xyzdocs-mdx:collections/server'
 import {
   InferPageType,
   InferMetaType,
@@ -6,14 +6,18 @@ import {
   LoaderPlugin,
 } from 'xyzdocs-core/source'
 import { lucideIconsPlugin } from 'xyzdocs-core/source/lucide-icons'
+import { toxyzdocsSource } from 'xyzdocs-mdx/runtime/server'
 
-// import { toxyzdocsSource } from 'xyzdocs-mdx/runtime/server';
 // import { lucideIconsPlugin } from 'xyzdocs-core/source/lucide-icons';
 // console.log(docs)
 export const source = loader({
   baseUrl: '/docs',
   source: docs.toxyzdocsSource(),
   plugins: [lucideIconsPlugin()],
+})
+
+export const blog = loader(toxyzdocsSource(blogPosts, []), {
+  baseUrl: '/blog',
 })
 
 export type Page = InferPageType<typeof source>
@@ -41,9 +45,6 @@ export type Meta = InferMetaType<typeof source>
 //     },
 //   };
 // }
-// export const blog = loader(toxyzdocsSource(blogPosts, []), {
-//   baseUrl: '/blog',
-// });
 
 export const getLLMText = async (page: InferPageType<typeof source>) => {
   const processed = await page.data.getText('raw')

@@ -15,7 +15,7 @@ import {
 import { type Generator } from '@/lib/base'
 import type { Nodes } from 'hast'
 import { parseTags } from '@/lib/parse-tags'
-import type { ResolvedShikiConfig } from 'fumadocs-core/highlight/config'
+import type { ResolvedShikiConfig } from 'xyzdocs-core/highlight/config'
 import { markdownRenderer } from '@/markdown'
 
 interface JSXMarkdownRenderer {

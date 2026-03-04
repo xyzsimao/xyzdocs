@@ -1,13 +1,8 @@
 import type { Metadata } from 'next'
-import { type ComponentProps, type FC, type ReactNode } from 'react'
-import * as Twoslash from 'xyzdocs-twoslash/ui'
-import { Callout } from 'xyzdocs-ui/components/callout'
-import { TypeTable } from 'xyzdocs-ui/components/type-table'
-// import * as Preview from '@/components/preview'
+
 import { createMetadata, getPageImage } from '@/lib/metadata'
 import { getLLMText, source } from '@/lib/source'
-// import { Wrapper } from '@/components/preview/wrapper'
-// import { Mermaid } from '@/components/mdx/mermaid'
+
 import { Feedback, FeedbackBlock } from '@/components/feedback/client'
 import {
   onBlockFeedbackAction,
@@ -21,36 +16,17 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import Link from 'xyzdocs-core/link'
-
-import { createRelativeLink } from 'xyzdocs-ui/mdx'
 import { findSiblings } from 'xyzdocs-core/page-tree'
 import { Card, Cards } from 'xyzdocs-ui/components/card'
-// import { getMDXComponents } from '@/mdx-components'
-// import { LLMCopyButton, ViewOptions } from '@/components/ai/page-actions'
-import { Banner } from 'xyzdocs-ui/components/banner'
-// import { Installation } from '@/components/preview/installation'
-// import { Customisation } from '@/components/preview/customisation'
-import {
-  DocsBody,
-  DocsPage,
-  PageLastUpdate,
-} from 'xyzdocs-ui/layouts/docs/page'
+import { DocsPage, PageLastUpdate } from 'xyzdocs-ui/layouts/docs/page'
 import { NotFound } from '@/components/not-found'
 import { getSuggestions } from './suggestions'
 import { PathUtils } from 'xyzdocs-core/source'
-
-import { Mermaid } from '@/components/mdx/mermaid'
-import { Installation } from '@/components/preview/installation'
-import { Customisation } from '@/components/preview/customisation'
-import { Wrapper } from '@/components/preview/wrapper'
-import { Example } from '@/components/example'
 import { Separator } from '@/components/ui/separator'
 import { CopyPage } from '@/components/geistdocs/copy-page'
 import { EditSource } from '@/components/geistdocs/edit-source'
 import { ScrollTop } from '@/components/geistdocs/scroll-top'
 import { getMDXComponents } from '@/components/geistdocs/mdx-components'
-
-
 // function PreviewRenderer({ preview }: { preview: string }): ReactNode {
 //   if (preview && preview in Preview) {
 //     const Comp = Preview[preview as keyof typeof Preview]
@@ -124,11 +100,82 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         <Mdx
           components={getMDXComponents({
             components: {
-              ...Twoslash,
-              a: createRelativeLink(source, page),
+              a: ({ href, ...props }) => {
+                const found = source.getPageByHref(href ?? '', {
+                  dir: PathUtils.dirname(page.path),
+                })
+
+                if (!found) return <Link href={href} {...props} />
+
+                return (
+                  <HoverCard>
+                    <HoverCardTrigger
+                      href={
+                        found.hash
+                          ? `${found.page.url}#${found.hash}`
+                          : found.page.url
+                      }
+                      {...props}
+                    >
+                      {props.children}
+                    </HoverCardTrigger>
+                    <HoverCardContent className="text-sm">
+                      <p className="font-medium">{found.page.data.title}</p>
+                      <p className="text-fd-muted-foreground">
+                        {found.page.data.description}
+                      </p>
+                    </HoverCardContent>
+                  </HoverCard>
+                )
+              },
               DocsCategory: ({ url }) => {
                 return <DocsCategory url={url ?? page.url} />
               },
+              // Example,
+              // ...Twoslash,
+              // a: ({ href, ...props }) => {
+              //   const found = source.getPageByHref(href ?? '', {
+              //     dir: PathUtils.dirname(page.path),
+              //   })
+              //   if (!found) return <Link href={href} {...props} />
+              //   return (
+              //     <HoverCard>
+              //       <HoverCardTrigger
+              //         href={
+              //           found.hash
+              //             ? `${found.page.url}#${found.hash}`
+              //             : found.page.url
+              //         }
+              //         {...props}
+              //       >
+              //         {props.children}
+              //       </HoverCardTrigger>
+              //       <HoverCardContent className="text-sm">
+              //         <p className="font-medium">{found.page.data.title}</p>
+              //         <p className="text-fd-muted-foreground">
+              //           {found.page.data.description}
+              //         </p>
+              //       </HoverCardContent>
+              //     </HoverCard>
+              //   )
+              // },
+              // FeedbackBlock: ({ children, ...props }) => (
+              //   <FeedbackBlock {...props} onSendAction={onBlockFeedbackAction}>
+              //     {children}
+              //   </FeedbackBlock>
+              // ),
+              // Banner,
+              // Mermaid,
+              // TypeTable,
+              // Wrapper,
+              // blockquote: Callout as unknown as FC<
+              //   ComponentProps<'blockquote'>
+              // >,
+              // DocsCategory: ({ url }) => {
+              //   return <DocsCategory url={url ?? page.url} />
+              // },
+              // Installation,
+              // Customisation,
               // Add your custom components here
             },
           })}
@@ -173,9 +220,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           //   TypeTable,
           //   Wrapper,
           //   blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
-          //   DocsCategory: ({ url }) => {
-          //     return <DocsCategory url={url ?? page.url} />
-          //   },
+
           //   Installation,
           //   Customisation,
           // })}

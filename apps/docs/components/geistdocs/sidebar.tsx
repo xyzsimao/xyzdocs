@@ -1,7 +1,7 @@
 "use client";
 
-import type { Node } from "fumadocs-core/page-tree";
-import DynamicLink from "fumadocs-core/dynamic-link";
+import type { Node } from 'xyzdocs-core/page-tree'
+import DynamicLink from 'xyzdocs-core/dynamic-link'
 import {
   SidebarFolder,
   SidebarFolderContent,

@@ -1,0 +1,72 @@
+---
+title: maximeheckel
+description: maximeheckel style
+date: 2024-11-24
+author: Fuma Nama
+---
+
+## Composable shader layers with Lamina
+
+Throughout this article, we built our shaders from scratch on top of the `shaderMaterial` material bundled in React Three Fiber. While it gives us almost unlimited possibilities, it also strips away a lot of work already done in some other materials.
+
+`meshPhysicalMaterial`, for example, comes with props that allow us to tweak the reflectivity and interact with lights on a scene. However, if we want to get that effect along a custom shader, we're out of luck: **we would have to reimplement the reflectivity and other physical properties of the material from scratch!**
+
+It is possible to do just that, but for many developers getting started with shaders, including me, this feels out of reach at this stage. This is where [Lamina](https://github.com/pmndrs/lamina) comes into the picture 🍰.
+
+> lamina lets you create materials with a declarative, system of layers. Layers make it incredibly easy to stack and blend effects. This approach was first made popular by the [Spline Team](https://spline.design).
+
+<Callout variant="info">
+
+I highly recommend taking a look at Lamina's [README](https://github.com/pmndrs/lamina/blob/main/README.md) and also at some of the examples the maintainers included. Those are worth experimenting with!
+
+</Callout>
+
+
+```jsx {8-9,12-13,23,31-35} title=Sample code for a Lamnina custom layer and layered material
+import { Canvas, extend } from '@react-three/fiber';
+import { LayerMaterial, Depth } from 'lamina';
+import { Abstract } from 'lamina/vanilla';
+import { useRef } from 'react';
+
+class CustomLayer extends Abstract {
+  // define your uniforms
+  static u_colorA = 'blue';
+  static u_colorB = 'pink';
+
+  // pass your shader code here
+  static vertexShader = `...`;
+  static fragmentShader = `...`;
+
+  constructor(props) {
+    super(CustomLayer, {
+      name: 'CustomLayer',
+      ...props,
+    });
+  }
+}
+
+extend({ CustomLayer });
+
+const Cube = () => {
+  const mesh = useRef();
+
+  return (
+    <mesh ref={mesh}>
+      <boxGeometry args={[1, 1, 1]} />
+      <LayerMaterial>
+        {/* Override your default uniforms with props! */}
+        <CustomLayer colorA="pink" colorB="orange" />
+        <Depth colorA="purple" colorB="red" />
+      </LayerMaterial>
+    </mesh>
+  );
+};
+
+const Scene = () => {
+  return (
+    <Canvas>
+      <Cube />
+    </Canvas>
+  );
+};
+```

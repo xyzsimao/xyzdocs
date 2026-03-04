@@ -1,5 +1,5 @@
 import { SiVercel } from "@icons-pack/react-simple-icons";
-import { DynamicLink } from "fumadocs-core/dynamic-link";
+import { DynamicLink } from 'xyzdocs-core/dynamic-link'
 import { basePath, Logo, nav, suggestions } from "@/geistdocs";
 import { Chat } from "./chat";
 import { DesktopMenu } from "./desktop-menu";

@@ -1,10 +1,11 @@
 import { DynamicLink } from "xyzdocs-core/dynamic-link";
 import { Heading } from "xyzdocs-ui/components/heading";
-import { TypeTable } from "xyzdocs-ui/components/type-table";
+
 import { PackageManagerTabs, PlatformTabs, Tab, Tabs } from "./tabs";
 import defaultMdxComponents from "xyzdocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { cn } from "@/lib/utils";
+
 
 import {
   Callout,
@@ -34,7 +35,38 @@ import { Accordion, Accordions } from "./accordion";
 
 import * as icons from 'lucide-react';
 import { FeedbackBlock } from "../feedback/client";
-import { DocsCategory, onBlockFeedbackAction } from "@/lib/github";
+import { Wrapper } from '@/components/preview/wrapper'
+import { Example } from '@/components/example'
+
+import * as Twoslash from 'xyzdocs-twoslash/ui'
+// import * as Preview from '@/components/preview'
+import { createMetadata, getPageImage } from '@/lib/metadata'
+import { getLLMText, source } from '@/lib/source'
+import {
+  onBlockFeedbackAction,
+  onPageFeedbackAction,
+  owner,
+  repo,
+} from '@/lib/github'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card'
+import Link from 'xyzdocs-core/link'
+
+import { createRelativeLink } from 'xyzdocs-ui/mdx'
+import { findSiblings } from 'xyzdocs-core/page-tree'
+
+import { Installation } from '@/components/preview/installation'
+import { Customisation } from '@/components/preview/customisation'
+
+import { NotFound } from '@/components/not-found'
+
+import { PathUtils } from 'xyzdocs-core/source'
+import { TypeTable } from 'xyzdocs-ui/components/type-table'
+import { ComponentProps, FC } from 'react'
+
 interface GetMDXComponentsOptions {
   components?: MDXComponents;
   /** Use the old site's typography styling for H1 elements (centered, semibold) */
@@ -51,40 +83,39 @@ export const getMDXComponents = (
     ...defaultMdxComponents,
     ...components,
     ...(isBlog && {
-      h1: (props: React.ComponentProps<"h1">) => {
-        const { className, ...rest } = props;
+      h1: (props: React.ComponentProps<'h1'>) => {
+        const { className, ...rest } = props
         return (
           <Heading
             className={cn(
-              "font-semibold text-center text-4xl tracking-wide!",
+              'font-semibold text-center text-4xl tracking-wide!',
               className
             )}
             as="h1"
             {...rest}
           />
-        );
-      }
+        )
+      },
     }),
     pre: CodeBlock,
-    a: ({ href, ...props }) =>
-      href.startsWith("/") ? (
-        <DynamicLink
-          className="font-normal text-primary no-underline"
-          href={`/[lang]${href}`}
-          {...props}
-        />
-      ) : (
-        <a
-          href={href}
-          {...props}
-          className="font-normal text-primary no-underline"
-        />
-      ),
+    // a: ({ href, ...props }) =>
+    //   href.startsWith('/') ? (
+    //     <DynamicLink
+    //       className="font-normal text-primary no-underline"
+    //       href={`/[lang]${href}`}
+    //       {...props}
+    //     />
+    //   ) : (
+    //     <a
+    //       href={href}
+    //       {...props}
+    //       className="font-normal text-primary no-underline"
+    //     />
+    //   ),
     CodeBlockTabs,
     CodeBlockTabsList,
     CodeBlockTabsTrigger,
     CodeBlockTab,
-    TypeTable,
     Tabs,
     Tab,
     PackageManagerTabs,
@@ -110,11 +141,18 @@ export const getMDXComponents = (
     InVersion,
     ExperimentalBadge,
     PrereleaseBadge,
-                FeedbackBlock: ({ children, ...props }) => (
-              <FeedbackBlock {...props} onSendAction={onBlockFeedbackAction}>
-                {children}
-              </FeedbackBlock>
-            ),
+    FeedbackBlock: ({ children, ...props }) => (
+      <FeedbackBlock {...props} onSendAction={onBlockFeedbackAction}>
+        {children}
+      </FeedbackBlock>
+    ),
+    Example,
+    ...Twoslash,
+    TypeTable,
+    Wrapper,
+    blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
 
-  };
+    Installation,
+    Customisation,
+  }
 };

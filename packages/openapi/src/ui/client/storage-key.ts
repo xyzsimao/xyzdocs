@@ -17,6 +17,6 @@ export function useStorageKey() {
   );
 }
 
-export function getStorageKey(prefix = 'fumadocs-openapi-', name: KeyName) {
-  return prefix + name;
+export function getStorageKey(prefix = 'xyzdocs-openapi-', name: KeyName) {
+  return prefix + name
 }

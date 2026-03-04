@@ -1,4 +1,4 @@
-# fumadocs-typescript
+# xyzdocs-typescript
 
 ## 5.1.0
 
@@ -9,8 +9,8 @@
 ### Patch Changes
 
 - Updated dependencies [9ba1250]
-  - fumadocs-ui@17.0.0
-  - fumadocs-core@17.0.0
+  - xyzdocs-ui@17.0.0
+  - xyzdocs-core@17.0.0
 
 ## 5.0.1
 
@@ -22,8 +22,8 @@
 - Updated dependencies [98d38ff]
 - Updated dependencies [446631d]
 - Updated dependencies [b16a32f]
-  - fumadocs-core@16.4.2
-  - fumadocs-ui@16.4.2
+  - xyzdocs-core@16.4.2
+  - xyzdocs-ui@16.4.2
 
 ## 5.0.0
 
@@ -49,19 +49,19 @@
   import {
     createGenerator,
     createFileSystemGeneratorCache,
-  } from "fumadocs-typescript";
+  } from "xyzdocs-typescript";
 
   const generator = createGenerator({
     // add this!
-    cache: createFileSystemGeneratorCache(".next/fumadocs-typescript"),
+    cache: createFileSystemGeneratorCache(".next/xyzdocs-typescript"),
   });
   ```
 
 ### Patch Changes
 
 - Updated dependencies [7c78045]
-  - fumadocs-ui@16.3.2
-  - fumadocs-core@16.3.2
+  - xyzdocs-ui@16.3.2
+  - xyzdocs-core@16.3.2
 
 ## 4.0.14
 
@@ -70,20 +70,20 @@
 - f728e67: Support customising full type with `@fumadocsType` tag
 - Updated dependencies [da87713]
 - Updated dependencies [d17499b]
-  - fumadocs-core@16.2.4
-  - fumadocs-ui@16.2.4
+  - xyzdocs-core@16.2.4
+  - xyzdocs-ui@16.2.4
 
 ## 4.0.13
 
 ### Patch Changes
 
-- ca09b6a: Core: Support accessing MDX plugins separately at `fumadocs-core/mdx-plugins/*`
+- ca09b6a: Core: Support accessing MDX plugins separately at `xyzdocs-core/mdx-plugins/*`
 - Updated dependencies [bc97236]
 - Updated dependencies [ca09b6a]
 - Updated dependencies [c0df2c4]
 - Updated dependencies [117ad86]
-  - fumadocs-core@16.0.8
-  - fumadocs-ui@16.0.8
+  - xyzdocs-core@16.0.8
+  - xyzdocs-ui@16.0.8
 
 ## 4.0.12
 
@@ -102,8 +102,8 @@
 - Updated dependencies [42f09c3]
 - Updated dependencies [55afd8a]
 - Updated dependencies [5966e23]
-  - fumadocs-ui@16.0.0
-  - fumadocs-core@16.0.0
+  - xyzdocs-ui@16.0.0
+  - xyzdocs-core@16.0.0
 
 ## 4.0.11
 
@@ -112,8 +112,8 @@
 - a3a14e7: Bump deps
 - Updated dependencies [a3a14e7]
 - Updated dependencies [7b0d839]
-  - fumadocs-core@15.8.3
-  - fumadocs-ui@15.8.3
+  - xyzdocs-core@15.8.3
+  - xyzdocs-ui@15.8.3
 
 ## 4.0.10
 
@@ -125,8 +125,8 @@
 - Updated dependencies [90cf1fe]
 - Updated dependencies [6c3bde5]
 - Updated dependencies [747bdbc]
-  - fumadocs-ui@15.8.2
-  - fumadocs-core@15.8.2
+  - xyzdocs-ui@15.8.2
+  - xyzdocs-core@15.8.2
 
 ## 4.0.9
 
@@ -139,8 +139,8 @@
 - Updated dependencies [6548a59]
 - Updated dependencies [51268ec]
 - Updated dependencies [51268ec]
-  - fumadocs-core@15.8.0
-  - fumadocs-ui@15.8.0
+  - xyzdocs-core@15.8.0
+  - xyzdocs-ui@15.8.0
 
 ## 4.0.8
 
@@ -148,8 +148,8 @@
 
 - 0d55667: Enforce `peerDeps` on Fumadocs deps
 - Updated dependencies [c948f59]
-  - fumadocs-core@15.7.10
-  - fumadocs-ui@15.7.10
+  - xyzdocs-core@15.7.10
+  - xyzdocs-ui@15.7.10
 
 ## 4.0.7
 
@@ -204,7 +204,7 @@
   Create a generator instance:
 
   ```ts
-  import { createGenerator } from "fumadocs-typescript";
+  import { createGenerator } from "xyzdocs-typescript";
 
   const generator = createGenerator(tsconfig);
   ```
@@ -212,7 +212,7 @@
   Refactor:
 
   ```tsx
-  import { remarkAutoTypeTable, createTypeTable } from 'fumadocs-typescript';
+  import { remarkAutoTypeTable, createTypeTable } from 'xyzdocs-typescript';
 
   generateDocumentation('./file.ts', 'MyClass', fs.readFileSync('./file.ts').toString())
   generateMDX('content', {...})
@@ -228,7 +228,7 @@
   To:
 
   ```tsx
-  import { AutoTypeTable, remarkAutoTypeTable } from "fumadocs-typescript";
+  import { AutoTypeTable, remarkAutoTypeTable } from "xyzdocs-typescript";
 
   generator.generateDocumentation({path: './file.ts'}, 'MyClass')
   generateMDX(generator, 'content', { ... })
@@ -313,10 +313,10 @@
 
 ### Major Changes
 
-- f75287d: **Introduce `fumadocs-docgen` package.**
+- f75287d: **Introduce `xyzdocs-docgen` package.**
 
   Offer a better authoring experience for advanced use cases.
-  - Move `remark-dynamic-content` and `remark-install` plugins to the new package `fumadocs-docgen`.
+  - Move `remark-dynamic-content` and `remark-install` plugins to the new package `xyzdocs-docgen`.
   - Support Typescript generator by default
 
   **Usage**
@@ -324,7 +324,7 @@
   Add the `remarkDocGen` plugin to your remark plugins.
 
   ```ts
-  import { remarkDocGen, fileGenerator } from "fumadocs-docgen";
+  import { remarkDocGen, fileGenerator } from "xyzdocs-docgen";
 
   remark().use(remarkDocGen, { generators: [fileGenerator()] });
   ```
@@ -354,7 +354,7 @@
   For `remarkInstall`, it remains the same:
 
   ```ts
-  import { remarkInstall } from "fumadocs-docgen";
+  import { remarkInstall } from "xyzdocs-docgen";
   ```
 
 ## 1.0.2

@@ -5,22 +5,22 @@ import type { FC } from 'react';
 import type { ExampleRequestItem } from '../operation/request-tabs';
 
 export interface APIPageClientOptions {
-  playground?: PlaygroundClientOptions;
-  operation?: OperationClientOptions;
+  playground?: PlaygroundClientOptions
+  operation?: OperationClientOptions
 
   /**
    * Set a prefix for `localStorage` keys.
    *
    * Useful when using multiple OpenAPI instances to prevent state conflicts.
    *
-   * @defaultValue `fumadocs-openapi-`
+   * @defaultValue `xyzdocs-openapi-`
    */
-  storageKeyPrefix?: string;
+  storageKeyPrefix?: string
 
   /**
    * Support other media types (for client-side serialization)
    */
-  mediaAdapters?: Record<string, MediaAdapter>;
+  mediaAdapters?: Record<string, MediaAdapter>
 }
 
 export interface OperationClientOptions {
