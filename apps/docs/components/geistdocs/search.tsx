@@ -16,7 +16,7 @@ import { useI18n } from "xyzdocs-ui/contexts/i18n";
 import { useSearchContext } from "xyzdocs-ui/contexts/search";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { Kbd } from "../ui/kbd";
+// import { Kbd } from "../ui/kbd";
 
 type SearchButtonProps = {
   className?: string;
@@ -60,19 +60,19 @@ export const SearchButton = ({ className, onClick }: SearchButtonProps) => {
   return (
     <Button
       className={cn(
-        "justify-between gap-8 pr-1.5 font-normal text-muted-foreground shadow-none",
+        'justify-between gap-8 pr-1.5 font-normal text-muted-foreground shadow-none',
         className
       )}
       onClick={() => {
-        setOpenSearch(true);
-        onClick?.();
+        setOpenSearch(true)
+        onClick?.()
       }}
       size="sm"
       type="button"
       variant="outline"
     >
       <span>Search...</span>
-      <Kbd className="border bg-background font-medium">⌘K</Kbd>
+      {/* <Kbd className="border bg-background font-medium">⌘K</Kbd> */}
     </Button>
-  );
+  )
 };

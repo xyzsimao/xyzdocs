@@ -2,7 +2,7 @@
 
 import type { ReactNode, ReactElement } from "react";
 import { Children, cloneElement, isValidElement } from "react";
-import { Tabs as FumaTabs, Tab } from "xyzdocs-ui/components/tabs";
+import { Tabs as FumaTabs, Tab, TabsContent } from 'xyzdocs-ui/components/tabs'
 
 export { Tab };
 

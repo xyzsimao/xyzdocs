@@ -5,8 +5,8 @@ export const shikiConfig: ResolvedShikiConfig = {
   ...configDefault,
   defaultThemes: {
     themes: {
-      light: 'github-light',
-      dark: 'vesper',
+      light: 'one-light',
+      dark: 'one-dark-pro',
     },
   },
-};
+}

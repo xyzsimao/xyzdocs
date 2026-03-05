@@ -1,11 +1,17 @@
 import { DynamicLink } from "xyzdocs-core/dynamic-link";
 import { Heading } from "xyzdocs-ui/components/heading";
 
-import { PackageManagerTabs, PlatformTabs, Tab, Tabs } from "./tabs";
+import { PackageManagerTabs, PlatformTabs } from './tabs'
 import defaultMdxComponents from "xyzdocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { cn } from "@/lib/utils";
-
+import {
+  Tab,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from 'xyzdocs-ui/components/tabs'
 
 import {
   Callout,
@@ -67,6 +73,7 @@ import { PathUtils } from 'xyzdocs-core/source'
 import { TypeTable } from 'xyzdocs-ui/components/type-table'
 import { ComponentProps, FC } from 'react'
 
+
 interface GetMDXComponentsOptions {
   components?: MDXComponents;
   /** Use the old site's typography styling for H1 elements (centered, semibold) */
@@ -97,7 +104,7 @@ export const getMDXComponents = (
         )
       },
     }),
-    pre: CodeBlock,
+    Pre: CodeBlock,
     // a: ({ href, ...props }) =>
     //   href.startsWith('/') ? (
     //     <DynamicLink
@@ -118,8 +125,10 @@ export const getMDXComponents = (
     CodeBlockTab,
     Tabs,
     Tab,
+    TabsContent,
+    TabsList,
     PackageManagerTabs,
-    PlatformTabs,
+    TabsTrigger,
     Callout,
     CalloutContainer,
     CalloutTitle,

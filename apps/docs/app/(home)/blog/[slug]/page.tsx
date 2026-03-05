@@ -21,57 +21,49 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
   const { body: Mdx, toc } = await page.data.load();
 
   return (
-        <AnchorProvider toc={toc}>
-    <article className="flex flex-col mx-auto w-full max-w-[800px] px-4 py-8">
-      <div className="flex flex-row gap-4 text-sm mb-8">
-        <div>
-          <p className="mb-1 text-fd-muted-foreground">Written by</p>
-          <p className="font-medium">{page.data.author}</p>
-        </div>
-        <div>
-          <p className="mb-1 text-sm text-fd-muted-foreground">At</p>
-          <p className="font-medium">
-            {new Date(
-              page.data.date ?? path.basename(page.path, path.extname(page.path)),
-            ).toDateString()}
-          </p>
-        </div>
-      </div>
-
-      <h1 className="text-3xl font-semibold mb-4">{page.data.title}</h1>
-      <p className="text-fd-muted-foreground mb-8">{page.data.description}</p>
-
-      <div className="prose min-w-0 flex-1">
-        <div className="flex flex-row gap-2 mb-8 not-prose">
-          <ShareButton url={page.url} />
-          <Link
-            href="/blog"
-            className={cn(
-              buttonVariants({
-                size: 'sm',
-                variant: 'secondary',
-              }),
-            )}
-          >
-            Back
-          </Link>
-        </div>
-      {toc.length > 0 && (
-        <div className="fixed  left-5 top-266px w-[286px]  overflow-auto max-xl:hidden">
-          {/* <p className="text-sm text-fd-muted-foreground mb-2">On this page</p> */}
-          <div className="flex flex-col">
-            {toc.map((item) => (
-              <TocItem key={item.url} item={item} />
-            ))}
+    <AnchorProvider toc={toc}>
+      <article className="flex flex-col mx-auto w-full max-w-[800px] px-4 py-8">
+        <div className="flex flex-row gap-4 text-sm mb-8">
+          <div>
+            <p className="mb-1 text-fd-muted-foreground">Written by</p>
+            <p className="font-medium">{page.data.author}</p>
+          </div>
+          <div>
+            <p className="mb-1 text-sm text-fd-muted-foreground">At</p>
+            <p className="font-medium">
+              {new Date(
+                page.data.date ??
+                  path.basename(page.path, path.extname(page.path))
+              ).toDateString()}
+            </p>
           </div>
         </div>
-      )}
-        {/* <InlineTOC items={toc} /> */}
-        <Mdx components={getMDXComponents()} />
-      </div>
-    </article>
+
+        <h1 className="text-3xl font-semibold mb-4">{page.data.title}</h1>
+        <p className="text-fd-muted-foreground mb-8">{page.data.description}</p>
+
+        <div className="prose min-w-0 flex-1">
+          <div className="flex flex-row gap-2 mb-8 not-prose">
+            <ShareButton url={page.url} />
+            <Link
+              href="/blog"
+              className={cn(
+                buttonVariants({
+                  size: 'default',
+                  variant: 'default',
+                })
+              )}
+            >
+              Back
+            </Link>
+          </div>
+
+          {/* <InlineTOC items={toc} /> */}
+          <Mdx components={getMDXComponents()} />
+        </div>
+      </article>
     </AnchorProvider>
-  );
+  )
 }
 
 export async function generateMetadata(props: PageProps<'/blog/[slug]'>): Promise<Metadata> {

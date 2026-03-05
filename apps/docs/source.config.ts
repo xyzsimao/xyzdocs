@@ -85,8 +85,10 @@ export const docs = defineDocs({
           langs: ['ts', 'js', 'html', 'tsx', 'mdx'],
           inline: 'tailing-curly-colon',
           themes: {
-            light: 'catppuccin-latte',
-            dark: 'catppuccin-mocha',
+            // light: 'catppuccin-latte',
+            // dark: 'catppuccin-mocha',
+            light: 'one-light',
+            dark: 'monokai',
           },
           transformers: [
             ...(rehypeCodeDefaultOptions.transformers ?? []),
@@ -135,8 +137,10 @@ export const blog = defineCollections({
       rehypeCodeOptions: {
         inline: 'tailing-curly-colon',
         themes: {
-          light: 'catppuccin-latte',
-          dark: 'catppuccin-mocha',
+          // light: 'catppuccin-latte',
+          // dark: 'catppuccin-mocha',
+          light: 'one-light',
+          dark: 'one-dark-pro',
         },
         transformers: [
           ...(rehypeCodeDefaultOptions.transformers ?? []),

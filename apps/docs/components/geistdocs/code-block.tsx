@@ -64,8 +64,8 @@ export const CodeBlock = ({
     (props: { className?: string }) => (
       <pre
         className={cn(
-          "not-prose flex-1 overflow-x-auto rounded-sm border bg-background py-3 text-sm outline-none",
-          "[&>code]:grid",
+          'not-prose flex-1 overflow-x-auto rounded-sm border bg-background py-3 text-base outline-none',
+          '[&>code]:grid',
           className,
           props.className
         )}
@@ -77,7 +77,7 @@ export const CodeBlock = ({
       </pre>
     ),
     [children, style, tabIndex, className]
-  );
+  )
 
   if (!title) {
     return (

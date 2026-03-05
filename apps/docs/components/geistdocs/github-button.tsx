@@ -1,18 +1,18 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { github } from "@/geistdocs";
+// import { github } from "@/geistdocs";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-
+import { owner, repo } from '@/lib/github'
 interface GitHubButtonProps {
   className?: string;
 }
 
 export const GitHubButton = ({ className }: GitHubButtonProps) => {
-  if (!(github.owner && github.repo)) {
-    return null;
+  if (!(owner && repo)) {
+    return null
   }
 
-  const url = `https://github.com/${github.owner}/${github.repo}`;
+  const url = `https://github.com/${owner}/${repo}`
 
   return (
     <Button
