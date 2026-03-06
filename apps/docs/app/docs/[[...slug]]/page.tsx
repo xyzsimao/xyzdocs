@@ -178,6 +178,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
               // Customisation,
               // Add your custom components here
             },
+            isBlog: false,
           })}
           // components={getMDXComponents({
           //   Example,

@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-
+/* @import 'xyzdocs-ui/css/style.css'; */
 @source inline("{hover:,}bg-red-{50,{100..900..100},950}");
 @source inline("{hover:,}bg-blue-{50,{100..900..100},950}");
 @source inline("{hover:,}bg-sky-{50,{100..900..100},950}");
@@ -16,8 +16,8 @@
 @plugin 'tailwindcss-animate';
 
 @import "tw-animate-css";
-@import "./design-system.css";
-@import "./font.css";
+/* @import "./design-system.css"; */
+/* @import "./font.css"; */
 @theme {
   --spacing-page: 1436px;
   --color-brand: hsl(26, 73%, 51%);
@@ -124,6 +124,7 @@
 
 
 :root {
+  font-size: 16px;
   --headless-color: hsl(250, 80%, 54%);
   --framework-color: hsl(41, 100%, 40%);
   --ui-color: hsl(217, 100%, 58%);
@@ -251,7 +252,7 @@ body {
   }
 }
 
-@keyframes circuit_1_x_energy {
+/* @keyframes circuit_1_x_energy {
   0%,
   46% {
     opacity: 0;
@@ -265,7 +266,7 @@ body {
     opacity: 0;
     transform: translateX(212px);
   }
-}
+} */
 
 @media print {
   #nd-docs-layout {
@@ -277,14 +278,14 @@ body {
   }
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
 
 /* This layer is by next-forge */
 @layer base {
@@ -314,14 +315,14 @@ body {
 }
 
 /* Prose styles */
-.prose h1,
+/* .prose h1,
 .prose h2,
 .prose h3,
 .prose h4,
 .prose h5,
 .prose h6 {
   @apply tracking-tight;
-}
+} */
 
 /* Line numbers styles for code blocks */
 /* @layer utilities {
@@ -354,18 +355,30 @@ body {
 }
 
 /* Fix mobile sidebar offset */
-#nd-sidebar-mobile {
+/* #nd-sidebar-mobile {
   @apply mt-16;
-}
+} */
 
 /* Hide the collapsible trigger in the mobile navbar */
-#nd-sidebar-mobile > div:first-child > div:first-child {
+/* #nd-sidebar-mobile > div:first-child > div:first-child {
   @apply hidden;
-}
+} */
 
 
 pre {
 
   @apply tracking-wide;
 
+}
+
+.c-fDScOd {
+    margin: 0px -50vw 2.25rem;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background: var(--color-fd-emphasis);
+    backdrop-filter: blur(6px);
 }

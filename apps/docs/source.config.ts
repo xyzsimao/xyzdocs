@@ -88,7 +88,7 @@ export const docs = defineDocs({
             // light: 'catppuccin-latte',
             // dark: 'catppuccin-mocha',
             light: 'one-light',
-            dark: 'monokai',
+            dark: 'one-dark-pro',
           },
           transformers: [
             ...(rehypeCodeDefaultOptions.transformers ?? []),

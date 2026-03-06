@@ -20,6 +20,10 @@ export const blog = loader(toxyzdocsSource(blogPosts, []), {
   baseUrl: '/blog',
 })
 
+export const post = loader(toxyzdocsSource(blogPosts, []), {
+  baseUrl: '/posts',
+})
+
 export type Page = InferPageType<typeof source>
 export type Meta = InferMetaType<typeof source>
 

@@ -19,8 +19,11 @@ export async function CodeBlock({ code, lang, wrapper }: CodeBlockProps) {
   });
 
   return (
-    <Base.CodeBlock {...wrapper} className={cn('my-0', wrapper?.className)}>
+    <Base.CodeBlock
+      {...wrapper}
+      className={cn('my-0', 'text-base', 'font-fari', wrapper?.className)}
+    >
       {rendered}
     </Base.CodeBlock>
-  );
+  )
 }

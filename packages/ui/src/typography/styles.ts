@@ -356,12 +356,13 @@ export const DEFAULT: Config = {
         fontWeight: '500',
         fontFamily: 'inherit',
         color: 'var(--tw-prose-kbd)',
-        boxShadow: '0 0 0 1px var(--tw-prose-kbd-shadows),0 3px 0 var(--tw-prose-kbd-shadows)',
+        boxShadow:
+          '0 0 0 1px var(--tw-prose-kbd-shadows),0 3px 0 var(--tw-prose-kbd-shadows)',
       },
       code: {
         padding: '3px',
         border: 'solid 1px',
-        fontSize: '13px',
+        fontSize: '14px',
         borderColor: `var(--color-fd-border)`,
         borderRadius: '5px',
         fontWeight: '400',
@@ -444,4 +445,4 @@ export const DEFAULT: Config = {
       },
     },
   ],
-};
+}

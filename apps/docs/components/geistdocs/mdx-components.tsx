@@ -1,7 +1,7 @@
 import { DynamicLink } from "xyzdocs-core/dynamic-link";
 import { Heading } from "xyzdocs-ui/components/heading";
 
-import { PackageManagerTabs, PlatformTabs } from './tabs'
+import { PackageManagerTabs } from './tabs'
 import defaultMdxComponents from "xyzdocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { cn } from "@/lib/utils";
@@ -20,13 +20,13 @@ import {
   CalloutTitle
 } from "./callout";
 import { Card, Cards } from "./card";
-import { CodeBlock } from "./code-block";
-import {
-  CodeBlockTab,
-  CodeBlockTabs,
-  CodeBlockTabsList,
-  CodeBlockTabsTrigger
-} from "./code-block-tabs";
+
+// import {
+//   CodeBlockTab,
+//   CodeBlockTabs,
+//   CodeBlockTabsList,
+//   CodeBlockTabsTrigger
+// } from "./code-block-tabs";
 // import { ExamplesTable } from "./examples-table";
 import { ExperimentalBadge } from "./experimental-badge";
 import { PrereleaseBadge } from "./prerelease-badge";
@@ -72,7 +72,10 @@ import { NotFound } from '@/components/not-found'
 import { PathUtils } from 'xyzdocs-core/source'
 import { TypeTable } from 'xyzdocs-ui/components/type-table'
 import { ComponentProps, FC } from 'react'
+import { CodeBlock } from '../code-block'
+import { Pre } from 'xyzdocs-ui/components/codeblock'
 
+import { BlogCallout } from '@/components/blog/callout'
 
 interface GetMDXComponentsOptions {
   components?: MDXComponents;
@@ -83,8 +86,9 @@ interface GetMDXComponentsOptions {
 export const getMDXComponents = (
   options: GetMDXComponentsOptions = {}
 ): MDXComponents => {
-  const { components, isBlog } = options;
-
+  const { components, isBlog } = options
+  // console.log('isBlog')
+  // console.log(options)
   return {
     ...(icons as unknown as MDXComponents),
     ...defaultMdxComponents,
@@ -105,6 +109,12 @@ export const getMDXComponents = (
       },
     }),
     Pre: CodeBlock,
+    // Pre: ({ ref: _ref, ...props }) => (
+    //   <CodeBlock {...props}>
+    //     <Pre className={cn('text-lg')}>{props.children}</Pre>
+    //   </CodeBlock>
+    // ),
+
     // a: ({ href, ...props }) =>
     //   href.startsWith('/') ? (
     //     <DynamicLink
@@ -119,10 +129,10 @@ export const getMDXComponents = (
     //       className="font-normal text-primary no-underline"
     //     />
     //   ),
-    CodeBlockTabs,
-    CodeBlockTabsList,
-    CodeBlockTabsTrigger,
-    CodeBlockTab,
+    // CodeBlockTabs,
+    // CodeBlockTabsList,
+    // CodeBlockTabsTrigger,
+    // CodeBlockTab,
     Tabs,
     Tab,
     TabsContent,
@@ -160,8 +170,22 @@ export const getMDXComponents = (
     TypeTable,
     Wrapper,
     blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
-
+    // blockquote: BlogCallout as unknown as FC<ComponentProps<'blockquote'>>,
+    // blockquote: isBlog
+    //   ? (BlogCallout as unknown as FC<ComponentProps<'blockquote'>>)
+    //   : (Callout as unknown as FC<ComponentProps<'blockquote'>>),
+    // blockquote: ({ ...props }) => (
+    //   <div
+    //     className={cn(
+    //       'bg-amber-200 mr-[-50vw] ml-[-50vw] relative w-screen backdrop-blur-[6px] mt-0 mb-9 py-10 inset-x-2/4'
+    //     )}
+    //   >
+    //     <div className={cn('text-cyan-800')}></div>
+    //     'blockquote'
+    //   </div>
+    // ),
     Installation,
     Customisation,
   }
-};
+}
+
