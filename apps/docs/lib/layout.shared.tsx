@@ -8,7 +8,7 @@ export const linkItems: LinkItemType[] = [
   {
     icon: <AlbumIcon />,
     text: 'Blog',
-    url: '/blog',
+    url: '/posts',
     active: 'nested-url',
   },
   {

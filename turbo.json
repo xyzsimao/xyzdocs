@@ -1,15 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": [
-    "NEXT_PUBLIC_ORAMA_DATASOURCE_ID",
-    "NEXT_PUBLIC_ORAMA_PROJECT_ID",
-    "NEXT_PUBLIC_ORAMA_API_KEY",
-    "ORAMA_PRIVATE_API_KEY",
-    "GITHUB_APP_PRIVATE_KEY",
-    "GITHUB_APP_ID",
-    "GITHUB_TOKEN",
-    "INKEEP_API_KEY"
-  ],
+
   "ui": "stream",
   "tasks": {
     "build": {
@@ -36,6 +27,9 @@
     },
     "clean": {
       "cache": false
+    },
+    "start": {
+      "dependsOn": ["^build"]
     },
     "dev": {
       "cache": false,

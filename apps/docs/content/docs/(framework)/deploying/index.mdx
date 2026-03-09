@@ -6,7 +6,7 @@ description: Deploy your xyzdocs app
 ## Overview
 
 Your xyzdocs app is powered by the underlying React framework (e.g. Next.js), you will need to check the relevant docs of your React framework for deployment guides.
-
+{/*
 - [Next.js](https://nextjs.org/docs/app/getting-started/deploying)
 - [React Router](https://reactrouter.com/start/framework/deploying)
 - [Tanstack Start](https://tanstack.com/start/latest/docs/framework/react/guide/hosting)
@@ -38,12 +38,12 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager [!code highlight]
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* source.config.ts next.config.* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# RUN \
+#   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+#   elif [ -f package-lock.json ]; then npm ci; \
+#   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+#   else echo "Lockfile not found." && exit 1; \
+#   fi
 
 
 # Rebuild the source code only when needed
@@ -94,4 +94,4 @@ ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
 ```
 
-This ensures xyzdocs MDX can access your configuration file during builds.
+This ensures xyzdocs MDX can access your configuration file during builds. */}

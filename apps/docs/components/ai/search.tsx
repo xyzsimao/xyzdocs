@@ -18,7 +18,7 @@ import Link from 'xyzdocs-core/link';
 import { type UIMessage, useChat, type UseChatHelpers } from '@ai-sdk/react';
 import type { ProvideLinksToolSchema } from '@/lib/chat/inkeep-qa-schema';
 import type { z } from 'zod';
-import { DefaultChatTransport } from 'ai';
+// import { DefaultChatTransport } from 'ai';
 import { Markdown } from './markdown';
 import { Presence } from '@radix-ui/react-presence';
 
@@ -289,10 +289,10 @@ export function AISearch({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const chat = useChat({
     id: 'search',
-    transport: new DefaultChatTransport({
-      api: '/api/chat',
-    }),
-  });
+    // transport: new DefaultChatTransport({
+    //   api: '/api/chat',
+    // }),
+  })
 
   return (
     <Context value={useMemo(() => ({ chat, open, setOpen }), [chat, open])}>{children}</Context>

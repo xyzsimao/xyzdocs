@@ -87,6 +87,7 @@ export const getMDXComponents = (
   options: GetMDXComponentsOptions = {}
 ): MDXComponents => {
   const { components, isBlog } = options
+  // TODO:
   // console.log('isBlog')
   // console.log(options)
   return {
@@ -169,11 +170,11 @@ export const getMDXComponents = (
     ...Twoslash,
     TypeTable,
     Wrapper,
-    blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
+    // blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
     // blockquote: BlogCallout as unknown as FC<ComponentProps<'blockquote'>>,
-    // blockquote: isBlog
-    //   ? (BlogCallout as unknown as FC<ComponentProps<'blockquote'>>)
-    //   : (Callout as unknown as FC<ComponentProps<'blockquote'>>),
+    blockquote: isBlog
+      ? (BlogCallout as unknown as FC<ComponentProps<'blockquote'>>)
+      : (Callout as unknown as FC<ComponentProps<'blockquote'>>),
     // blockquote: ({ ...props }) => (
     //   <div
     //     className={cn(

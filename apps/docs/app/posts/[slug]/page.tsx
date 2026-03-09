@@ -13,26 +13,22 @@ import { AnchorProvider } from 'xyzdocs-core/toc';
 import { getMDXComponents } from '@/components/geistdocs/mdx-components'
 
 
-export default async function Page(props: PageProps<'/blog/[slug]'>) {
-  const params = await props.params;
-  const page = blog.getPage([params.slug]);
+export default async function Page(props: PageProps<'/posts/[slug]'>) {
+  const params = await props.params
+  const page = blog.getPage([params.slug])
 
-  if (!page) notFound();
-  const { body: Mdx, toc } = await page.data.load();
+  if (!page) notFound()
+  const { body: Mdx, toc } = await page.data.load()
 
   return (
-    <AnchorProvider toc={toc}>
-      <article className="flex flex-col mx-auto w-full max-w-[800px] px-4 py-8">
-
-
-        <div className="prose min-w-0 flex-1">
-
-
-          {/* <InlineTOC items={toc} /> */}
-          <Mdx components={getMDXComponents()} />
-        </div>
-      </article>
-    </AnchorProvider>
+    // <AnchorProvider toc={toc}>
+    <article className="flex flex-col mx-auto w-full max-w-[800px] px-4 py-8">
+      <div className="prose min-w-0 flex-1">
+        {/* <InlineTOC items={toc} /> */}
+        <Mdx components={getMDXComponents({ components: {}, isBlog: true })} />
+      </div>
+    </article>
+    // </AnchorProvider>
   )
 }
 

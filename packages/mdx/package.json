@@ -111,7 +111,7 @@
   "peerDependencies": {
     "@types/react": "*",
     "xyzdocs-core": "^15.0.0 || ^16.0.0",
-    "next": "^15.3.0 || ^16.0.0",
+    "next": "16.1.6",
     "react": "*",
     "vite": "6.x.x || 7.x.x"
   },

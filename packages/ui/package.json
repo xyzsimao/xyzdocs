@@ -63,7 +63,7 @@
   "peerDependencies": {
     "@types/react": "*",
     "xyzdocs-core": "workspace:*",
-    "next": "16.x.x",
+    "next": "16.1.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.0.0"

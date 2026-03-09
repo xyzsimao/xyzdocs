@@ -27,12 +27,15 @@ export function TocItem({ item }: { item: TOCItemType }) {
   return (
     <a
       href={item.url}
-      className={cn('text-sm text-fd-foreground/80 py-1', isActive && 'text-fd-primary')}
+      className={cn(
+        'text-sm text-fd-foreground/80 py-1',
+        isActive && 'text-fd-primary'
+      )}
       style={{
         paddingLeft: Math.max(0, item.depth - 2) * 16,
       }}
     >
-      {item.title}
+      {/* {item.title} */}
     </a>
-  );
+  )
 }
