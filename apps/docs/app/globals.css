@@ -1,19 +1,12 @@
 @import 'tailwindcss';
-/* @import 'xyzdocs-ui/css/style.css'; */
-@source inline("{hover:,}bg-red-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-blue-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-sky-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-green-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-amber-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-purple-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-slate-{50,{100..900..100},950}");
-@source inline("{hover:,}bg-pink-{50,{100..900..100},950}");
-
+@import './base.css';
 @import "xyzdocs-ui/css/shadcn.css";
 @import 'xyzdocs-ui/css/neutral.css';
 @import 'xyzdocs-ui/css/preset.css';
 @import 'xyzdocs-twoslash/twoslash.css';
 @plugin 'tailwindcss-animate';
+
+@source 'components/colors/**/*.tsx';
 
 @import "tw-animate-css";
 /* @import "./design-system.css"; */
@@ -371,14 +364,12 @@ pre {
 
 }
 
-.c-fDScOd {
-    margin: 0px -50vw 2.25rem;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    width: 100vw;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background: var(--color-fd-emphasis);
-    backdrop-filter: blur(6px);
+
+
+@utility container-wrapper {
+  @apply   mx-auto w-full px-2;
+}
+
+@utility container {
+  @apply   mx-auto max-w-[1400px] px-4 lg:px-8;
 }

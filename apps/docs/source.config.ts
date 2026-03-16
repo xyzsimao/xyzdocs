@@ -15,6 +15,7 @@ import type { ShikiTransformer } from 'shiki'
 import type { ElementContent } from 'hast'
 import { shikiConfig } from './lib/shiki'
 import type { RemarkAutoTypeTableOptions } from 'xyzdocs-typescript'
+import { smoothuiLight } from '@/lib/themes/smoothui-light'
 
 export const docs = defineDocs({
   dir: 'content/docs',
@@ -88,6 +89,7 @@ export const docs = defineDocs({
             // light: 'catppuccin-latte',
             // dark: 'catppuccin-mocha',
             light: 'one-light',
+            // light: smoothuiLight,
             dark: 'one-dark-pro',
           },
           transformers: [
