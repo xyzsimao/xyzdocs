@@ -27,6 +27,7 @@ import { CopyPage } from '@/components/geistdocs/copy-page'
 import { EditSource } from '@/components/geistdocs/edit-source'
 import { ScrollTop } from '@/components/geistdocs/scroll-top'
 import { getMDXComponents } from '@/components/geistdocs/mdx-components'
+import { DemoLiveEditor } from '@/components/react-live/live-edit'
 // function PreviewRenderer({ preview }: { preview: string }): ReactNode {
 //   if (preview && preview in Preview) {
 //     const Comp = Preview[preview as keyof typeof Preview]
@@ -100,6 +101,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         <Mdx
           components={getMDXComponents({
             components: {
+              DemoLiveEditor,
               a: ({ href, ...props }) => {
                 const found = source.getPageByHref(href ?? '', {
                   dir: PathUtils.dirname(page.path),

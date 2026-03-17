@@ -87,6 +87,9 @@
     "xyzdocs-twoslash": "workspace:*",
     "xyzdocs-typescript": "workspace:*",
     "xyzdocs-ui": "workspace:*",
+    "prism-react-renderer": "^2.4.0",
+    "sucrase": "^3.35.0",
+    "use-editable": "^2.3.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {

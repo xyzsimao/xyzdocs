@@ -6,7 +6,7 @@
 @import 'xyzdocs-twoslash/twoslash.css';
 @plugin 'tailwindcss-animate';
 
-@source 'components/colors/**/*.tsx';
+
 
 @import "tw-animate-css";
 /* @import "./design-system.css"; */
@@ -118,12 +118,12 @@
 
 :root {
   font-size: 16px;
-  --headless-color: hsl(250, 80%, 54%);
-  --framework-color: hsl(41, 100%, 40%);
-  --ui-color: hsl(217, 100%, 58%);
-  --cli-color: hsl(24.6, 95%, 53.1%);
-  --mdx-color: hsl(45.4, 93.4%, 47.5%);
-  --miscellaneous-color: hsl(333.3, 71.4%, 50.6%);
+  --headless-color: var(--color-lime-500);
+  --framework-color: var(--color-amber-500);
+  --ui-color: var(--color-blue-500);
+  --cli-color: var(--color-pink-500);
+  --mdx-color: var(--color-yellow-500);
+  --miscellaneous-color: var(--color-purple-500);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -159,9 +159,12 @@
 }
 
 .dark {
-  --headless-color: hsl(250 100% 80%);
-  --framework-color: #fff383;
-  --ui-color: #a9ceff;
+  --headless-color: var(--color-lime-500);
+  --framework-color: var(--color-amber-500);
+  --ui-color: var(--color-blue-500);
+  --cli-color: var(--color-pink-500);
+  --mdx-color: var(--color-yellow-500);
+  --miscellaneous-color: var(--color-purple-500);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
